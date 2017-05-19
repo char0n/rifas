@@ -1,0 +1,21 @@
+#set($layout = "layouts/xmlLayout.vm")
+<div id="bookmarks">
+    <div>
+        <a href="#" class="lbAction" rel="deactivate"><img style="width:16px;height:16px" src="$request.contextPath/images/close_icon.gif" alt="" width="16" height="16" border="0" /></a>
+    </div>
+    <br />
+    <p class="centered">
+        <a title="Bookmark with Delicious" href="http://del.icio.us/post?url=$escape.url($request.getHeader("Referer"))&title=Rifas Project"><img style="width:12px;height:12px;" src="$request.contextPath/images/bookmark-icons/delicious.png" alt="Delicious" width="12" height="12" border="0" /></a>
+        &nbsp;<a title="Bookmark with Digg" href="http://digg.com/submit?phase=3&url=$escape.url($request.getHeader("Referer"))&title=Rifas Project"><img style="width:14px;height:12px;" src="$request.contextPath/images/bookmark-icons/digg.png" alt="Digg" width="14" height="12" border="0" /></a>
+        &nbsp;<a title="Bookmark with Furl" href="http://www.furl.net/store?s=f&to=0&u=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/furl.gif" alt="Furl" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Netscape" href="http://www.netscape.com/submit/?U=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/netscape.png" alt="Netscape" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Stumble" href="http://www.stumbleupon.com/submit?url=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/stumble1.gif" alt="Stumble" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Technorati" href="http://technorati.com/faves?add=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/technorati.png" alt="Technorati" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Squidoo" href="http://www.squidoo.com/lensmaster/bookmark?$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/squidoo.png" alt="Squidoo" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Live.com" href="https://favorites.live.com/quickadd.aspx?marklet=1&mkt=en-us&url=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/live.png" alt="Live.com" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Yahoo" href="http://myweb.yahoo.com/myresults/bookmarklet?u=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/yahoo.png" alt="Yahoo" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Google" href="http://www.google.com/bookmarks/mark?op=edit&output=popup&bkmk=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/google.png" alt="Google" width="16" height="16" border="0" /></a>
+        &nbsp;<a title="Bookmark with Facebook" href="http://www.facebook.com/share.php?u=$escape.url($request.getHeader("Referer"))"><img style="width:16px;height:16px;" src="$request.contextPath/images/bookmark-icons/facebook.gif" alt="Facebook" width="16" height="16" border="0" /></a>
+    </p>
+    <br />    
+</div>

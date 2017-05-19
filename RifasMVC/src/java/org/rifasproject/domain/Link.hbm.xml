@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.Link" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <cache region="org.rifasproject.domain.Link" usage="nonstrict-read-write"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">link_id_seq</param>
+      </generator>
+    </id>
+    <property name="url" type="string">
+      <column index="url_idx" length="800" name="url" not-null="true"/>
+    </property>
+    <property column="active" name="active" not-null="false" type="boolean"/>
+    <property column="`size`" name="size" not-null="false" type="integer"/>
+    <many-to-one class="org.rifasproject.domain.LinkSet" column="linkSetId" name="linkSet" not-null="true"/>
+  </class>
+</hibernate-mapping>

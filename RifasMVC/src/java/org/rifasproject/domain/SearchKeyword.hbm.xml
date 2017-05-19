@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.SearchKeyword" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <cache region="org.rifasproject.domain.SearchKeyword" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">searchkeyword_id_seq</param>
+      </generator>
+    </id>
+    <property column="keyword" length="255" name="keyword" not-null="true" type="string" unique="true"/>
+    <property column="firstSeen" name="firstSeen" not-null="true"/>
+    <property column="lastSeen" index="last_seen_idx" name="lastSeen" not-null="true"/>
+    <property column="searchCount" index="search_count_idx" name="searchCount" not-null="true"/>
+    <!--
+    <set cascade="all-delete-orphan" lazy="true" name="related" table="SearchKeywordKeyword">
+      <cache usage="read-write"/>
+      <key column="searchKeywordId"/>
+      <many-to-many class="org.openphrases.domain.Keyword" column="keywordId"/>
+    </set>
+    -->
+  </class>
+</hibernate-mapping>

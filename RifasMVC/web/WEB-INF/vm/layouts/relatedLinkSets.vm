@@ -1,0 +1,55 @@
+<h2>Related LinkSets</h2>
+<table class="linkSetsList">
+    #if ($null.isNull($relatedLinkSets) || $relatedLinkSets.size() == 0)
+    <tr>
+        <td colspan="6" class="centered"><strong>No related LinkSets found</strong></td>
+    </tr>
+    #else
+    <tr>
+        <td class="header">&nbsp;</td>
+        <td class="header">Name</td>
+        <td class="header">Links</td>
+        <td class="header">Active Links</td>
+        <td class="header">Size</td>
+        <td class="header">Type</td>
+        <td class="header">Status</td>
+    </tr>
+    #end
+    #foreach ($related in $relatedLinkSets)
+    <tr>
+        #set($active = 0)
+        #set($size   = $math.toDouble(0))
+        #foreach ($link in $relatedLinks.get($related.id))
+            #if ($link.active == true)
+                #set ($active = $active + 1)
+                #set ($size   = $size + $link.size)
+            #end
+        #end
+        #if ($related.name.length() > 60)
+            #set ($name = $related.name.substring(0, 60)+"...")
+        #else
+            #set ($name = $related.name)
+        #end
+        <td class="centered">
+            <a title="RIFAS search for: $escape.html($related.name)" href="$request.contextPath/linksets/search/$escape.url($related.name)/in/all/storage/$related.storage.name().toLowerCase()/filter/all"><img src="$request.contextPath/images/favicon.png" alt="$escape.html($related.name)" border="0" width="16" height="16" /></a>
+        </td>
+        <td><a href="$request.contextPath/linksets/show/$related.uuid" title="$escape.html($related.name)">$escape.html($name)</a>&nbsp;&nbsp;</td>
+        <td>$relatedLinks.get($related.id).size()&nbsp;&nbsp;</td>
+        <td>$active&nbsp;&nbsp;</td>
+        <td>$linkSizeUtil.formatSize($size)&nbsp;&nbsp;</td>
+        <td>$related.storage.name()&nbsp;&nbsp;</td>
+        #if ($related.isChecked() == true && $active == $relatedLinks.get($related.id).size())
+            <td class="checked">active&nbsp;&nbsp;</td>
+        #elseif ($related.isChecked() == false)
+            <td class="unchecked">unchecked&nbsp;&nbsp;</td>
+        #elseif ($related.isChecked() == true && ($active < $links.get($related.id).size() && $active != 0))
+            <td class="unchecked">$math.sub($links.get($linkSet.id).size(), $active) missing&nbsp;&nbsp;</td>
+        #elseif ($related.isChecked() == true && $active == 0)
+            <td class="deleted">deleted&nbsp;&nbsp;</td>
+        #else
+            <td class="deleted">incomplete</td>
+        #end
+        #set ($processed = $processed + 1)
+    </tr>
+    #end
+</table>

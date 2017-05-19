@@ -1,0 +1,79 @@
+<form name="searchBar" action="$request.contextPath/linksets/search/" method="post">
+    <table id="searchTypes" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        #set ($url = "/linksets/search/")
+                        #if ($keyword) #set ($url = $url+$escape.html($keyword)+"/") #end
+                        #foreach($linkSetType in $linkSetTypes)
+                            #set ($dictionary = $linkSetType.dictionary)
+                            #set ($urlType = $url+"in/"+$escape.html($dictionary.findByKey("acronym").value))
+                            #if ($storage) #set($urlType = $urlType +"/storage/"+$storage) #else #set($urlType = $urlType +"/storage/rapidshare") #end
+                            #if ($null.isNull($filter)) #set($urlType = $urlType + "/filter/all")
+                            #elseif ($filter == "checked") #set($urlType = $urlType + "/filter/checked")
+                            #elseif ($filter.equals("unchecked")) #set($urlType = $urlType + "/filter/unchecked")
+                            #elseif ($filter.equals("active")) #set($urlType = $urlType + "/filter/active")
+                            #elseif ($filter.equals("deleted")) #set($urlType = $urlType + "/filter/deleted")
+                            #else #set($urlType = $urlType + "/filter/all")
+                            #end
+
+                            #if ($activeLinkSetType == $dictionary.findByKey("acronym").value)
+                            <td class="active">$escape.html($dictionary.findByKey("text").value)</td>
+                            #else
+                                <td><a href="$request.contextPath$urlType" title="$dictionary.findByKey("extensions").value">$escape.html($dictionary.findByKey("text").value)</a></td>
+                            #end
+                            #if ($velocityCount < $linkSetTypes.size()) <td class="delim"></td> #end
+                        #end
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table id="searchTable">
+        <tr>
+            <td>
+                <br />
+                #if (!$keyword)
+                <input type="text" name="keyword" value="" />
+                #else
+                <input type="text" name="keyword" value="$escape.html($keyword)" />
+                #end
+                #if (!$activeLinkSetType)
+                <input type="hidden" name="fileType" value="" />
+                #else
+                <input type="hidden" name="fileType" value="$activeLinkSetType" />
+                #end
+                <input type="submit" value="Search" />
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="$request.contextPath/storages" rel="nofollow" class="lbOn"><strong>Search:</strong></a>
+                <select name="storage" id="storageList">
+                    <option value="rapidshare" selected="selected">Rapidshare.com</option>
+                </select>
+                <span id="activeStorageDef"></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="$request.contextPath/filters" rel="nofollow" class="lbOn"><strong>Filter:</strong></a>
+                <select name="filter" id="filterList">
+                    <option value="all"#if($filter == "all") selected="selected"#end>all</option>
+                    <option value="checked"#if ($filter == "checked") selected="selected"#end>checked</option>
+                    <option value="unchecked"#if ($filter == "unchecked") selected="selected"#end>unchecked</option>
+                    <option value="active"#if ($filter == "active") selected="selected"#end>active</option>
+                    <option value="deleted"#if ($filter == "deleted") selected="selected"#end>deleted</option>
+                </select>
+                <span id="activeFilterDef"></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="$request.contextPath/search-engines" rel="nofollow" class="lbOn"><strong>DIS Engine:</strong></a>
+                <select name="search_engine" id="searchEngineList">
+                    <option value="google"#if($DISSearchEngine == "google") selected="selected"#end>Google</option>
+                    <option value="yahoo"#if($DISSearchEngine == "yahoo") selected="selected"#end>Yahoo</option>
+                </select>
+                <span id="activeSearchEngineDef"></span>
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript" language="javascript" src="$request.contextPath/javascript/searchBar.js"></script>

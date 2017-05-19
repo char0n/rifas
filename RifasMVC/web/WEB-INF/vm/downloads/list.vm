@@ -1,0 +1,134 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>Rifas Downloads</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+           <h2>RifasGUI 1.0b</h2>
+           <table class="download">
+               <tr>
+                   <td rowspan="6" class="screenshot"><a href="$request.contextPath/images/rifasGUI-screenshot.png" title="Click to see full size screenshot" target="_blank"><img src="$request.contextPath/images/rifasGUI-screenshot-icon.png" border="0" alt="RifasGUI 1.0b" width="145" height="97" /></a></td>
+                   <td><strong>Developer</strong></td>
+                   <td>QuidProQuo inc.</td>
+               </tr>
+               <tr>
+                   <td><strong>Version</strong></td>
+                   <td>1.0b</td>
+               </tr>
+               <tr>
+                   <td><strong>License</strong></td>
+                   <td>BSD-style license</td>
+               </tr>
+               <tr>
+                   <td><strong>OS</strong></td>
+                   <td>Interpreted language / Independent</td>
+               </tr>
+               <tr>
+                   <td><strong>Last Updated</strong></td>
+                   <td>January 26, 2009</td>
+               </tr>
+               <tr>
+                   <td><strong>Category</strong></td>
+                   <td>Internet</td>
+               </tr>
+               <tr>
+                   <td colspan="3">
+                       <strong>RifasGUI 1.0b</strong><br />
+                       RifasGUI is a desktop RIFAS application independent of RIFAS web application.
+                       RifasGUI searches for files on internet and make their URIs awaillable to you
+                       for further processing.
+                   </td>
+               </tr>
+           </table>
+           <h3>RifasGUI 1.0b Files</h3>
+           <table class="download" style="width: 100%">
+               <tr>
+                   <td><strong>OS</strong></td>
+                   <td><strong>File</strong></td>
+                   <td><strong>Size</strong></td>
+                   <td><strong>MD5 checksum</strong></td>
+               </tr>
+               <tr>
+                   <td><strong><i>Linux</i></strong></td>
+                   <td><a href="$request.contextPath/downloads/RifasGUI-1.0b-linux.tgz">RifasGUI-1.0b-linux.tgz</a></td>
+                   <td><i>7.48 MB (7,845,169 bytes)</i></td>
+                   <td><strong>0114965f245da0189c42010f4ca1ea9c</strong></td>
+               </tr>
+               <tr>
+                   <td><strong><i>Windows</i></strong></td>
+                   <td><a href="$request.contextPath/downloads/RifasGUI-1.0b-win32.zip">RifasGUI-1.0b-win32.zip</a></td>
+                   <td><i>7.56 MB (7,935,830 bytes)</i></td>
+                   <td><strong>12f57f5c5935b9072d4a56ef1624c781</strong></td>
+               </tr>
+               <tr>
+                   <td colspan="4">
+                       <strong>Java Web Start Installation</strong>&nbsp;&nbsp;
+                       <a href="$request.contextPath/downloads/RifasGUI.jnlp"><img src="$request.contextPath/images/jws-launch-button.png" alt="Java Web Start" style="vertical-align: middle" border="0" /></a>
+                   </td>
+               </tr>
+           </table>
+           <hr /><br /><br />
+
+          <a name="rrc"></a>
+          <h2>Rifas Remote Checker 1.0b EXPERIMENTAL</h2>
+           <table class="download">
+               <tr>
+                   <td rowspan="6" class="screenshot"><img src="$request.contextPath/images/rrc-screenshot-icon.png" border="0" alt="Rifas Remote Checker 1.0b EXPERIMENTAL" /></td>
+                   <td><strong>Developer</strong></td>
+                   <td>QuidProQuo inc.</td>
+               </tr>
+               <tr>
+                   <td><strong>Version</strong></td>
+                   <td>1.0b EXPERIMENTAL</td>
+               </tr>
+               <tr>
+                   <td><strong>License</strong></td>
+                   <td>BSD-style license</td>
+               </tr>
+               <tr>
+                   <td><strong>OS</strong></td>
+                   <td>Interpreted language / Independent</td>
+               </tr>
+               <tr>
+                   <td><strong>Last Updated</strong></td>
+                   <td>March 06, 2009</td>
+               </tr>
+               <tr>
+                   <td><strong>Category</strong></td>
+                   <td>Internet</td>
+               </tr>
+               <tr>
+                   <td colspan="3">
+                       <strong>Rifas Remote Checker 1.0b EXPERIMENTAL</strong><br />
+                       Rifas Remote Checker later only RRC is a javascript library capable of beeing applied on
+                       every html/xhtml webpage. RRC is a standalone library with <strong>flxhr</strong> dependancy
+                       which is packed with RRC in download package. RRC is suitable for every blog/forum/webpage which hosts <strong>links</strong> to
+                       rapidshare/megaupload ... storage engines. After implemented your visitor can check these <strong>links</strong>
+                       for validity and size without leaving your page. Implementation is trivial, gane for visitors is huge. RRC only support
+                       storage engines that RIFAS project generaly supports. Storage engine is detected automatically by RRC.
+                       <br /><br />
+                       <p class="centered">
+                        <strong>For more information visit <a href="$request.contextPath/rrc/docs">RRC documentation</a> or <a href="$request.contextPath/rrc/demo">demo</a></strong>
+                       </p>
+                   </td>
+               </tr>
+           </table>
+           <h3>Rifas Remote Checker 1.0b EXPERIMENTAL Files</h3>
+           <table class="download" style="width: 100%">
+               <tr>
+                   <td><strong>OS</strong></td>
+                   <td><strong>File</strong></td>
+                   <td><strong>Size</strong></td>
+                   <td><strong>MD5 checksum</strong></td>
+               </tr>
+               <tr>
+                   <td><strong><i>Independent</i></strong></td>
+                   <td><a href="$request.contextPath/downloads/rrc-1.0b-EX.zip">rrc-1.0b-EX.zip</a></td>
+                   <td><i>33.8 kB (34,662 bytes)</i></td>
+                   <td><strong>7619704f929bafe4160d726852425eaa</strong></td>
+               </tr>
+           </table>
+           <hr />
+       </div>
+    </div>
+</div>

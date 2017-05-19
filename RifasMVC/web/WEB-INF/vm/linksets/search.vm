@@ -1,0 +1,341 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        #parse("layouts/searchBar.vm")
+        <br /><br />
+    </div>
+    <div id="bodymainmiddlePan">
+        <div id="bodymiddlePan">
+            #if ($linkSets)
+            <div id="deepScan">
+                <p onmouseover="Tip('DIS - full scale real-time internet search, searching for more results all over the internet', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();"><abbr title="DIS - full scale real-time internet search, searching for more results all over the internet">Deep Internet Scan</abbr></p>
+                <div id="deepScanProgress" style="display:none">
+                    <img src="$request.contextPath/images/scan_progress.gif" alt="" style="vertical-align: middle"/>
+                    <strong id="deepScanLevel">Level 1</strong> scan in progress...
+                </div>
+                <ul id="deepScanLevels">
+                    <li><a href="#" rel="nofollow" onclick="showProgressIndicator('Level1'); return false;" onmouseover="Tip('DIS Level 1 - quick shallow scan, usualy fetches only couple of results', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" title="DIS Level 1 - quick shallow scan, usualy fetches only couple of results">Level 1</a></li>
+                    <li><a href="#" rel="nofollow" onclick="showProgressIndicator('Level2'); return false;" onmouseover="Tip('DIS Level 2 - still quick shallow scan, takes more than 5 seconds, fetches more results', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" title="DIS Level 2 - still quick shallow scan, takes more than 5 seconds, fetches more results">Level 2</a></li>
+                    <li><a href="#" rel="nofollow" onclick="showProgressIndicator('Level3'); return false;" onmouseover="Tip('DIS Level 3 - deep internet scan, takes more than 15 seconds, fetches much more results', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" title="DIS Level 3 - deep internet scan, takes more than 15 seconds, fetches much more results">Level 3</a></li>
+                    <li><a href="#" rel="nofollow" onclick="showProgressIndicator('Level4'); return false;" onmouseover="Tip('DIS Level 4 - deepest internet scan, takes up to half a minute, fetches all results that are found all over the internet', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" title="DIS Level 4 - deepest internet scan, takes up to half a minute, fetches all results that are found all over the internet">Level 4</a></li>
+                </ul>
+                <br clear="left" />
+            </div>
+            #end
+            #if ($linkSets && $linkSets.size() != 0)
+                <table id="affiliateSearch">
+                    <tr>
+                        <td rowspan="3">
+                            <a href="$request.contextPath/download/$escape.url($keyword)" title="Download ${escape.html($keyword)}"><img src="$request.contextPath/images/download-icon.png" alt="Download ${escape.html($keyword)}" border="0" /></a>
+                        </td>
+                        <td>
+                            <a href="$request.contextPath/download/$escape.url($keyword)$escape.url(".full.rar")" title="Download ${escape.html($keyword)}.full.rar">${escape.html($keyword)}.full.rar</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="$request.contextPath/download/$escape.url($keyword)$escape.url(" [FULLVERSION]")" title="Download ${escape.html($keyword)} [FULLVERSION]">${escape.html($keyword)} [FULLVERSION]</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="$request.contextPath/download/$escape.url("[HIGHSPEED] ")$escape.url($keyword)" title="Download [HIGHSPEED] ${escape.html($keyword)}">[HIGHSPEED] ${escape.html($keyword)}</a>
+                        </td>
+                    </tr>
+                </table>
+                <div id="resultSort">
+                    <span>Sort by:</span>
+               #if ($sortingOrder.name() == "ASC")
+                  #set ($so = "desc")
+               #else
+                  #set ($so = "asc")
+               #end
+                #foreach ($sortId in $sorting.keySet())
+                   #if ($sortId == $sortById)
+                       <a href="$request.contextPath/$searchURL/sort/$sortId/$so#if($page != 1)/page/$page#end" title="Sorting by $escape.html($sorting.get($sortId)) in ${sortingOrder.name().toLowerCase()}ending order" class="active" rel="nofollow">$escape.html($sorting.get($sortId))</a>
+                       <img src="$request.contextPath/images/sort-${sortingOrder.name().toLowerCase()}.png" alt="Sort by $escape.html($sorting.get($sortId))" width="11" height="9" />
+                   #else
+                       <a href="$request.contextPath/$searchURL/sort/$sortId/asc#if($page != 1)/page/$page#end" title="Sort by $escape.html($sorting.get($sortId)) in ascending order" rel="nofollow">$escape.html($sorting.get($sortId))</a>
+                       <img src="$request.contextPath/images/sort-asc.png" alt="Sort by $escape.html($sorting.get($sortId))" width="11" height="9" />
+                   #end                  
+                #end
+                </div>
+                #pagination()
+                <p style="text-align:right">
+                    #set($offsetFrom = ($p_currentIndex - 1) * $p_itemsPerPage)
+                    #if (($offsetFrom + $p_itemsPerPage) <= $p_itemsCount)
+                        #set($offsetTo = $offsetFrom + $p_itemsPerPage)
+                    #else
+                        #set($offsetTo = $p_itemsCount)
+                    #end
+                    Results: <strong>$math.add($offsetFrom, 1)</strong> - <strong>$offsetTo</strong> from <strong>$p_itemsCount</strong> for <strong>$escape.html($keyword)</strong>
+                </p>
+                <br />
+            #elseif ($linkSets && $linkSets.size() == 0)
+             <div style="text-align: center">
+                  <strong>No matches found for:</strong> $escape.html($keyword)
+                  <br />                  
+                  <br />
+                  <div id="DISalert">
+                    #if ($autoDIS == true)
+                      Rifas has already commenced real time internet search. No LinkSets matches
+                      your search query. As you read this, fresh results are beeing downloaded.
+                      Wait a few seconds for <strong>Deep Internet Scan</strong> to finish scanning the internet.
+                    #else
+                      Rifas was unable to find any matches in internal library and in <strong>Deep Internet Scan Level1</strong>.
+                      Plase try higher level of Deep Internet Scan.
+                    #end
+                  </div>
+             </div>
+            #else
+            <div id="importedMovies">
+            <h1>Top LinkSets</h1>
+               #foreach($importedMovie in $importedMovies)
+                  <a title="Search for $escape.html($importedMovie) movie" href="$request.contextPath/linksets/search/$escape.url($importedMovie)/in/all/storage/rapidshare/filter/all">$escape.html($importedMovie)</a>#if ($velocityCount < $importedMovies.size()), #end
+               #end
+            </div>
+            #end
+            <!-- You will NOT be able to see the ad on your site! This unit is hidden on your page, and will only display to your search engine traffic (from US and CA). To preview, paste the code up on your site, then add #chitikatest=mortgage to the end of your URL in your browser's address bar.  Example:  www.yourwebsite.com#chitikatest=mortgage. This will show you what the ad would look like to a user who is interested in "mortgages." -->
+            <script type="text/javascript"><!--
+            ch_client = "quidproquo";
+            ch_type = "mpu";
+            ch_width = 728;
+            ch_height = 90;
+            ch_color_bg = "FFFFFF";
+            ch_color_border = "FFFFFF";
+            ch_color_title = "929017";
+            ch_color_site_link = "929017";
+            ch_color_text = "707070";
+            ch_non_contextual = 4;
+            ch_vertical ="premium";
+            ch_font_title = "Arial";
+            ch_font_text = "Arial";
+            ch_sid = "Chitika Premium";
+            var ch_queries = new Array( );
+            var ch_selected=Math.floor((Math.random()*ch_queries.length));
+            if ( ch_selected < ch_queries.length ) {
+            ch_query = ch_queries[ch_selected];
+            }
+            //--></script>
+            <script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
+            </script>
+            #set($counter = 0)
+            #foreach ($linkSet in $linkSets)
+            #set($counter = $counter + 1)
+            #if ($counter == 5)
+            <!-- You will NOT be able to see the ad on your site! This unit is hidden on your page, and will only display to your search engine traffic (from US and CA). To preview, paste the code up on your site, then add #chitikatest=mortgage to the end of your URL in your browser's address bar.  Example:  www.yourwebsite.com#chitikatest=mortgage. This will show you what the ad would look like to a user who is interested in "mortgages." -->
+            <script type="text/javascript"><!--
+            ch_client = "quidproquo";
+            ch_type = "mpu";
+            ch_width = 728;
+            ch_height = 90;
+            ch_color_bg = "FFFFFF";
+            ch_color_border = "FFFFFF";
+            ch_color_title = "929017";
+            ch_color_site_link = "929017";
+            ch_color_text = "707070";
+            ch_non_contextual = 4;
+            ch_vertical ="premium";
+            ch_font_title = "Arial";
+            ch_font_text = "Arial";
+            ch_sid = "Chitika Premium";
+            var ch_queries = new Array( );
+            var ch_selected=Math.floor((Math.random()*ch_queries.length));
+            if ( ch_selected < ch_queries.length ) {
+            ch_query = ch_queries[ch_selected];
+            }
+            //--></script>
+            <script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
+            </script>
+            #end
+            <div class="linkSet">
+                <p>
+                    #if ($linkSet.name)
+                    <a href="$request.contextPath/download/$escape.url($linkSet.name)" title="Download $escape.html($linkSet.name)"><img src="$request.contextPath/images/download_icon_2_min.jpg" alt="Download $escape.html($linkSet.name)" border="0" /></a>
+                    <a onmouseover="TagToTip('toolTip$linkSet.id', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" href="$request.contextPath/linksets/show/$linkSet.uuid">$searchTool.highlight($escape.html($linkSet.name), $escape.html($keyword))</a>
+                    #else
+                    <a href="$request.contextPath/download/$escape.url($keyword)" title="Download"><img src="$request.contextPath/images/download_icon_2_min.jpg" alt="Download" border="0" /></a>
+                    <a href="$request.contextPath/linksets/show/$linkSet.uuid">$linkSet.uuid</a>
+                    #end                    
+                </p>
+                #if ($linkSet.description)<p class="desc">$searchTool.highlight($escape.html($linkSet.description), $escape.html($keyword))</p>#else<br />#end
+                #set($maxLinksToShow = 10)
+                #set($displayedLinks = 0)
+                #set($moreShowed = false)
+                #set($active =0)
+                #set($size = $math.toDouble(0))
+                <div class="links">
+                    <table id="links$linkSet.id">
+                    #set ($obfuscator = $linkObfuscator.getObfuscator($linkSet.storage))
+                    #set ($maxLength = 110)
+                    #foreach ($link in $links.get($linkSet.id))
+                       #set ($linkUrl = $obfuscator.obfuscate($link))
+                       #if ($linkUrl.length() > $maxLength)
+                            #set ($point1   = ($linkUrl.length() / 2) - (($linkUrl.length() - $maxLength) /2))
+                            #set ($point2 =  $point1 + ($linkUrl.length() - $maxLength))
+                            #set ($linkUrl   = $linkUrl.substring(0, $point1)+"..."+$linkUrl.substring($point2, $linkUrl.length()))
+                       #end
+                        
+                       #if ($displayedLinks < $maxLinksToShow)
+                           #if ($link.active == true)
+                            <tr>
+                                <td style="width: 80%">
+                                    <div><span class="active">$escape.html($linkUrl)</span></div>
+                                   #set($active = $active + 1)
+                                </td>
+                                <td>$linkSizeUtil.formatSize($link.size)</td>
+                            </tr>
+                           #else
+                            <tr>
+                                <td style="width: 80%">
+                                    #if ($linkSet.isChecked() == true)
+                                    <div><span class="deleted">$escape.html($linkUrl)</span></div>
+                                    #else
+                                    <div><span class="inactive">$escape.html($linkUrl)</span></div>
+                                    #end
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                           #end
+                        #elseif ($displayedLinks >= $maxLinksToShow)
+                           #if ($link.active == true)
+                            <tr style="display:none">
+                                <td style="width: 80%">
+                                    <div><span class="active">$escape.html($linkUrl)</span></div>
+                                   #set($active = $active + 1)
+                                </td>
+                                <td>$linkSizeUtil.formatSize($link.size)</td>
+                            </tr>
+                           #else
+                            <tr style="display:none">
+                                <td style="width: 80%">
+                                    #if ($linkSet.isChecked() == true)
+                                    <div><span class="deleted">$escape.html($linkUrl)</span></div>
+                                    #else
+                                    <div><span class="inactive">$escape.html($linkUrl)</span></div>
+                                    #end
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                           #end
+                        #end
+                        #set($displayedLinks = $displayedLinks + 1)
+
+                        #if ($displayedLinks >= $maxLinksToShow && $links.get($linkSet.id).size() - $displayedLinks != 0 && $moreShowed == false)
+                           <tr id="moreLinksRowlinks$linkSet.id">
+                               <td colspan="2"><a href="#" onclick="showHiddenLinks('links$linkSet.id'); return false;">...and $math.sub($links.get($linkSet.id).size(), $displayedLinks) more</a></td>
+                           </tr>
+                           #set($moreShowed = true)
+                        #end
+                       #set($size = $size + $link.size)
+                    #end
+                    </table>
+                </div>
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td>
+                                #set($tmp1size = $linkSizeUtil.formatSize($size))
+                                <span>Storage</span> ($linkSet.storage.name()) |
+                                <span>Links</span> ($links.get($linkSet.id).size()) |
+                                <span>Active</span> ($active/$links.get($linkSet.id).size()) |
+                                <span>Size</span> ($tmp1size) |
+                                Source (#foreach ($page in $pages.get($linkSet.id)) <a onmouseover="Tip('&lt;img style=\'vertical-align: middle\' src=\'$request.contextPath/images/webpage.png\' alt=\'WebPage #$page.id\' width=\'32\' height=\'32\' /&gt; $escape.html($page.url)', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" href="$request.contextPath/webpages/show/$page.id"><img src="$request.contextPath/images/url_icon.gif" alt="WebPage source" width="16" height="16" border="0" style="vertical-align:middle" /></a>#if ($velocityCount < $pages.get($linkSet.id).size())&nbsp;#end #end)
+                            </td>
+                            <td class="right">
+                                #if ($linkSet.isChecked() == true && $active != 0)
+                                    <span>Status</span> (<span class="checked">checked</span>, $date.format($linkSet.lastChecked))
+                                #elseif ($linkSet.isChecked() == true && $active == 0)
+                                    <span>Status</span> (<span class="unchecked">deleted</span>)
+                                #elseif ($linkSet.isChecked() == false)
+                                    <span>Status</span> (<span class="unchecked">unchecked</span>)
+                                #end
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Created</span> ($date.format($linkSet.created)) |
+                                <span>Comments</span>
+                                #if($commentCounts.containsKey($linkSet.id))
+                                    (<a rel="nofollow" href="$request.contextPath/linksets/show/$linkSet.uuid/comments">$commentCounts.get($linkSet.id)</a>)
+                                #else
+                                    (<a rel="nofollow" href="$request.contextPath/linksets/show/$linkSet.uuid/comments">0</a>)
+                                #end
+                            </td>
+                            <td class="right"><span>UUID</span> ($linkSet.uuid)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Tags</span>
+                                (
+                                #foreach ($tag in $tags.get($linkSet.id))
+                                    <a href="$request.contextPath/linksets/search/$escape.url($tag.binder)/in/$activeLinkSetType/storage/$storage/filter/$filterAcronym">$escape.html($tag.binder)</a>#if ($velocityCount < $tags.get($linkSet.id).size()), #end
+                                #end
+                                )
+                            </td>
+                            <td class="right">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="toolTip$linkSet.id" style="display: none">
+                <table style="min-width:500px" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td rowspan="6" style="width: 165px"><img src="$request.contextPath/images/linkset_types/${linkSet.type.name()}.png" alt="$linkSetTypeUtil.searchTextByLinkSetType($linkSet.type)" width="128" height="128" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <strong>
+                            #if ($linkSet.name)
+                             $escape.html($linkSet.name)
+                            #else
+                             $linkSet.uuid
+                            #end
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100px">LinkSet type:</td>
+                        <td>$linkSetTypeUtil.searchTextByLinkSetType($linkSet.type)</td>
+                    </tr>
+                    <tr>
+                        <td>Links:</td>
+                        <td>$links.get($linkSet.id).size()</td>
+                    </tr>
+                    <tr>
+                        <td>Size:</td>
+                        <td>$tmp1size</td>
+                    </tr>
+                    <tr>
+                        <td>Search tags:</td>
+                        <td>
+                            #foreach ($tag in $tags.get($linkSet.id))
+                                <a href="$request.contextPath/linksets/search/$escape.url($tag.binder)/in/$activeLinkSetType/storage/$storage/filter/$filterAcronym">$escape.html($tag.binder)</a>#if ($velocityCount < $tags.get($linkSet.id).size()), #end
+                            #end
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            #if ($velocityCount < $linkSets.size()) <div class="hr"></div> #end
+            #end
+            #if ($linkSets.size() != 0)
+             <br />#pagination()<br />
+            #end
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/linkSets.js"></script>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/tooltip/wz_tooltip.js"></script>
+<script type="text/javascript" language="javascript">
+    #if ($linkSets && $linkSets.size() == 0 && $autoDIS == true)
+     Event.observe(window, 'load', automaticDIS, false);
+    #end
+    #if ($null.isNull($linkSets))
+     Event.observe(window, 'load', focusKeywordInput, false);
+    #end
+    #if ($loadRelatedKeywords == true)
+     var phrase = "$escape.url($keyword)";
+     getRelatedKeywords(phrase);
+    #end
+</script>

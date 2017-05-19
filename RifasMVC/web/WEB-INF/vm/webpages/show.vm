@@ -1,0 +1,132 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>WebPage (#$page.id)</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+        <div id="bodymiddlePan">
+            <table id="webPage" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td><strong>URL</strong></td>
+                    <td>
+                        <a onmouseover="Tip('Open direct link', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" href="$linkObfuscator.encodeNCR($page.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/url_icon.gif" width="16" height="16" alt="Open direct link" border="0" style="vertical-align:middle" /></a>
+                        <a onmouseover="Tip($escape.html("'<strong>Warning</strong><br /><br />We store snapshot of this page in our library.<br /> HTML Content in this page may contain malicious codes.<br /> We strongly recommend you to turn off javascript in your browser<br /> before clicking on this link.'"), SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" href="$request.contextPath/webpages/showcontent/$page.id" rel="nofollow">$linkObfuscator.encodeNCR($page.url)</a>
+                    </td>
+                </tr>
+                #if ($pProps.containsKey("title"))
+                <tr>
+                    #set ($pTitle = $pProps.get("title"))
+                    <td><strong>Title</strong></td>
+                    <td>
+                        #if ($pTitle.length() > 100)
+                          #set ($pTitle = $pTitle.substring(0, 100)+"...")
+                        #end
+                        $escape.html($pTitle)
+                    </td>
+                </tr>
+                #end
+                #if ($pProps.containsKey("description"))
+                <tr>
+                    <td><strong>Description</strong></td>
+                    <td>
+                        $escape.html($pProps.get("description"))
+                    </td>
+                </tr>
+                #end
+                #if ($pProps.containsKey("keywords"))
+                <tr>
+                    <td><strong>Keywords</strong></td>
+                    <td>
+                        #set($keywords = $pProps.get("keywords").split(","))
+                        #foreach ($keyword in $keywords)
+                          <a href="$request.contextPath/linksets/search/$escape.url($keyword.trim())/in/all/storage/rapidshare/filter/all">$escape.html($keyword.trim())</a> 
+                        #end
+                    </td>
+                </tr>
+                #end
+                <tr>
+                    <td><strong>Content Type</strong></td>
+                    <td>$page.type.getType()</td>
+                </tr>
+                <tr>
+                    <td><strong>Content size</strong></td>
+                    <td>$math.roundTo(2, $math.div($page.content.length(), 1024)) kB</td>
+                </tr>
+                <tr>
+                    <td><abbr title="Simple LinkSet password detection; Finds out if there is 'password' string in the page content"><strong>Password detection&nbsp;&nbsp;</strong></abbr></td>
+                    <td>
+                        #if ($page.content.indexOf("password") != -1)
+                            <span class="detected">detected</span>
+                        #else
+                            undetected
+                        #end
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">This page directly contains <strong>$linkSetSize</strong> LinkSet/s</td>
+                </tr>
+            </table>
+
+            <br /><br />
+            <h2>LinkSet/s associated with WebPage #$page.id</h2>
+            #if ($linkSets.size() > 0)
+            <br />#pagination()
+            #end
+            <table class="linkSetsList">
+                #if ($linkSets.size() == 0)
+                <tr>
+                    <td colspan="6"><strong>No LinkSets found</strong></td>
+                </tr>
+                #else
+                <tr>
+                    <td class="header">&nbsp;</td>
+                    <td class="header">Name</td>
+                    <td class="header">Links</td>
+                    <td class="header">Active Links</td>
+                    <td class="header">Size</td>
+                    <td class="header">Type</td>
+                    <td class="header">Status</td>
+                </tr>
+                #end
+                #foreach ($linkSet in $linkSets)
+                <tr>
+                    #set($active = 0)
+                    #set($size   = $math.toDouble(0))
+                    #foreach ($link in $links.get($linkSet.id))
+                        #if ($link.active == true)
+                            #set ($active = $active + 1)
+                            #set ($size   = $size + $link.size)
+                        #end
+                    #end
+                    #if ($linkSet.name.length() > 60)
+                        #set ($name = $linkSet.name.substring(0, 60)+"...")
+                    #else
+                        #set ($name = $linkSet.name)
+                    #end
+                    <td class="centered">
+                        <a title="RIFAS search for: $escape.html($linkSet.name)" href="$request.contextPath/linksets/search/$escape.url($linkSet.name)/in/all/storage/$linkSet.storage.name().toLowerCase()/filter/all"><img src="$request.contextPath/images/favicon.png" alt="$escape.html($linkSet.name)" border="0" width="16" height="16" /></a>
+                    </td>
+                    <td><a href="$request.contextPath/linksets/show/$linkSet.uuid" title="$escape.html($linkSet.name)">$escape.html($name)</a>&nbsp;&nbsp;</td>
+                    <td>$links.get($linkSet.id).size()&nbsp;&nbsp;</td>
+                    <td>$active&nbsp;&nbsp;</td>
+                    <td>$linkSizeUtil.formatSize($size)&nbsp;&nbsp;</td>
+                    <td>$linkSet.storage.name()&nbsp;&nbsp;</td>
+                    #if ($linkSet.isChecked() == true && $active == $links.get($linkSet.id).size())
+                        <td class="checked">active&nbsp;&nbsp;</td>
+                    #elseif ($linkSet.isChecked() == false)
+                        <td class="unchecked">unchecked&nbsp;&nbsp;</td>
+                    #elseif ($linkSet.isChecked() == true && ($active < $links.get($linkSet.id).size() && $active != 0))
+                        <td class="unchecked">$math.sub($links.get($linkSet.id).size(), $active) missing&nbsp;&nbsp;</td>
+                    #elseif ($linkSet.isChecked() == true && $active == 0)
+                        <td class="deleted">deleted&nbsp;&nbsp;</td>
+                    #end
+                    #set ($processed = $processed + 1)
+                </tr>
+                #end
+            </table>
+            #if ($linkSets.size() > 0)
+            <br />#pagination()
+            #end
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/tooltip/wz_tooltip.js"></script>

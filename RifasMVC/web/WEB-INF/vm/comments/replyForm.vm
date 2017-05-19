@@ -1,0 +1,29 @@
+#set($layout = "layouts/emptyLayout.vm")
+<div id="commentAdd">
+    <p><a href="#" class="lbAction" rel="deactivate">[x] close</a></p>
+    <div id="commentAddErrors"></div>
+    <form name="commentForm">
+        <table>
+            <tr>
+                <td><input type="text" name="author" size="30" maxlength="15" /> Author*</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="email" size="30" maxlength="70" /> Email (will not be published)</td>
+            </tr>
+            <tr>
+                <td><input type="text" name="web" size="30" maxlength="80" /> Web (will be published)</td>
+            </tr>
+            <tr>
+                <td>
+                    <textarea name="message" cols="50" rows="7"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center">
+                    <input type="hidden" name="parentId" value="$escape.html($commentId)" />
+                    <input type="button" value="Send" onclick="addComment('$itemId', '$owner')" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>

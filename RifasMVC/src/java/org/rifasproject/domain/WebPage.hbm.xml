@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.WebPage" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">webpage_id_seq</param>
+      </generator>
+    </id>
+    <property column="content" lazy="true" name="content" not-null="true" type="text"/>
+    <property column="type" name="type" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.MimeType</param>
+      </type>
+    </property>
+    <property column="url" length="800" name="url" not-null="true" type="string"/>
+    <set cascade="save-update" inverse="true" lazy="true" name="linkSets" table="LinkSetWebPage">
+      <key column="webPageId"/>
+      <many-to-many class="org.rifasproject.domain.LinkSet" column="linkSetId"/>
+    </set>
+  </class>
+</hibernate-mapping>

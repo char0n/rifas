@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+   <!-- Sitemap generation beans -->
+   <bean id="topMoviesSitemap" class="org.rifasproject.mvc.sitemap.TopMoviesSitemap" />
+   <bean id="imdbSearchSitemap" class="org.rifasproject.mvc.sitemap.ImdbSearchSitemap" />
+   <bean id="linkSetSitemap" class="org.rifasproject.mvc.sitemap.LinkSetsSitemap">
+       <property name="maintenanceService" ref="maintenanceService" />
+   </bean>
+   <bean id="imdbTitlesSitemap" class="org.rifasproject.mvc.sitemap.ImdbTitlesSitemap">
+       <property name="maintenanceService" ref="maintenanceService" />
+   </bean>
+
+   <!-- pingers -->
+   <bean id="googleSitemapPinger" class="sk.mortality.sitemap.ping.GoogleSitemapPinger" />
+   <bean id="yahooSitemapPinger" class="sk.mortality.sitemap.ping.YahooSitemapPinger" />
+   <bean id="bingSitemapPinger" class="sk.mortality.sitemap.ping.BingSitemapPinger" />
+
+   <!-- deployment sitemap -->
+   <bean id="sitemapStoage" class="sk.mortality.sitemap.FileSitemapStorage" />
+   <bean id="sitemapGenerator" class="sk.mortality.sitemap.SitemapGeneratorImpl" depends-on="topMoviesSitemap, imdbSearchSitemap, sitemapStoage">
+       <property name="sitemapStorage" ref="sitemapStoage" />
+       <property name="sitemaps">
+           <list>
+               <ref bean="topMoviesSitemap" />
+               <ref bean="imdbSearchSitemap" />
+           </list>
+       </property>
+   </bean>
+
+   <!-- full site sitemap -->
+   <bean id="sitemapGeneratorFull" class="sk.mortality.sitemap.SitemapGeneratorImpl" depends-on="linkSetSitemap, sitemapStoage, googleSitemapPinger, yahooSitemapPinger, bingSitemapPinger">
+       <property name="sitemapStorage" ref="sitemapStoage" />
+       <property name="sitemaps">
+           <list>
+               <ref bean="linkSetSitemap" />
+               <ref bean="imdbTitlesSitemap" />
+           </list>
+       </property>
+       <property name="sitemapPingers">
+           <list>
+               <ref bean="googleSitemapPinger" />
+               <ref bean="yahooSitemapPinger" />
+               <ref bean="bingSitemapPinger" />
+           </list>
+       </property>
+   </bean>
+   
+   <!-- schelduled timer tasks -->
+   <!--
+   <bean id="linkSetDownloaderTask" class="org.rifasproject.mvc.cron.DownloadLinkSets" depends-on="linkSetService">
+       <property name="linkSetService" ref="linkSetService" />
+   </bean>
+   <bean id="schelduledLinkSetDownload" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <property name="delay" value="10000" />
+        <property name="period" value="50000" />
+        <property name="timerTask" ref="linkSetDownloaderTask" />
+   </bean>
+   -->
+   <bean id="sitemapGeneratorTask" class="org.rifasproject.mvc.cron.SitemapGenerator" depends-on="sitemapGenerator">
+       <property name="sitemapGenerator" ref="sitemapGenerator" />
+   </bean>
+   <bean id="schelduledSitemapGenerator" class="org.springframework.scheduling.timer.ScheduledTimerTask" depends-on="sitemapGeneratorTask">
+        <!-- wait 10 seconds before starting repeated execution -->
+        <property name="delay" value="10000" />
+        <!-- run at deployment only -->
+        <property name="period" value="29030400000" />
+        <property name="timerTask" ref="sitemapGeneratorTask" />
+   </bean>
+   <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean" depends-on="schelduledSitemapGenerator">
+        <property name="scheduledTimerTasks">
+            <list>
+                <!--<ref bean="schelduledSitemapGenerator" />-->
+            </list>
+        </property>
+    </bean>
+
+    <!--
+        schelduled quartz jobs
+    -->
+    <!-- Generating sitemap every day from site content -->
+    <bean id="schelduledSitemapGeneratorJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.rifasproject.mvc.cron.PeriodicSitemapGeneratorJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="sitemapGenerator" value-ref="sitemapGeneratorFull" />
+            </map>
+        </property>
+    </bean>
+    <bean id="schelduledSitemapGeneratorJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="schelduledSitemapGeneratorJob" />
+        <!-- run every day at 04:00 -->
+        <property name="cronExpression" value="0 10 3 * * ?" />
+    </bean>
+    <!-- Periodic LinkSet checking -->
+    <bean id="schelduledPeriodicLinkSetCheckerJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.rifasproject.mvc.cron.PeriodicLinkSetCheckerJob" />
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="maintenanceService" value-ref="maintenanceService" />
+          </map>
+        </property>
+    </bean>
+    <bean id="schelduledPeriodicLinkSetCheckerJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="schelduledPeriodicLinkSetCheckerJob"/>
+        <!-- run every 3 MINUTES -->
+        <property name="cronExpression" value="0 0/3 * * * ?"/>
+    </bean>
+    <!-- Periodic LinkSet rechecking -->
+    <bean id="schelduledPeriodicLinkSetRecheckerJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.rifasproject.mvc.cron.PeriodicLinkSetRecheckerJob" />
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="maintenanceService" value-ref="maintenanceService" />
+          </map>
+        </property>
+    </bean>
+    <bean id="schelduledPeriodicLinkSetRecheckerJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="schelduledPeriodicLinkSetRecheckerJob"/>
+        <!-- run every 3 MINUTES -->
+        <property name="cronExpression" value="30 1/3 * * * ?"/>
+    </bean>
+    <!-- Periodic LinkSet archiving -->
+    <bean id="schelduledPeriodicDeletedLinkSetArchiverJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.rifasproject.mvc.cron.PeriodicDeletedLinkSetArchiverJob" />
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="maintenanceService" value-ref="maintenanceService" />
+          </map>
+        </property>
+    </bean>
+    <bean id="schelduledPeriodicDeletedLinkSetArchiverJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="schelduledPeriodicDeletedLinkSetArchiverJob"/>
+        <!-- run every 1st of every second month morning at 3:30 AM -->
+        <property name="cronExpression" value="0 30 3 1 2,4,6,8,10,12 ?"/>
+    </bean>
+    <!-- Periodic WebPage cleaning -->
+    <bean id="schelduledPeriodicWebPageCleanerJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.rifasproject.mvc.cron.PeriodicWebPageCleanerJob" />
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="maintenanceService" value-ref="maintenanceService" />
+          </map>
+        </property>
+    </bean>
+    <bean id="schelduledPeriodicWebPageCleanerJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="schelduledPeriodicWebPageCleanerJob"/>
+        <!-- run every 1st of every month morning at 3:55 AM -->
+        <property name="cronExpression" value="0 55 3 1 * ?"/>
+    </bean>
+    <!-- Periodic Library statistics generation -->
+    <bean id="schelduledLibraryStatisticsGeneratorJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="org.rifasproject.mvc.cron.LibraryStatisticsGeneratorJob" />
+        <property name="jobDataAsMap">
+          <map>
+            <entry key="statsService" value-ref="statsService" />
+          </map>
+        </property>
+    </bean>
+    <bean id="schelduledLibraryStatisticsGeneratorJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="schelduledLibraryStatisticsGeneratorJob"/>
+        <!-- run every day morning at 00:00 AM -->
+        <property name="cronExpression" value="0 0 0 * * ?"/>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+      <property name="triggers">
+        <list>
+          <ref bean="schelduledPeriodicLinkSetCheckerJobTrigger" />
+          <ref bean="schelduledPeriodicLinkSetRecheckerJobTrigger" />
+          <ref bean="schelduledPeriodicDeletedLinkSetArchiverJobTrigger" />
+          <ref bean="schelduledPeriodicWebPageCleanerJobTrigger" />
+          <ref bean="schelduledLibraryStatisticsGeneratorJobTrigger" />
+          <ref bean="schelduledSitemapGeneratorJobTrigger" />
+        </list>
+      </property>
+    </bean>
+ </beans>

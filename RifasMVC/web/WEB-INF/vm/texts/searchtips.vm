@@ -1,0 +1,112 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>Search Tips</h1>
+        <p>
+            <strong>This section should give you some insight of wide possibilities of RIFAS search engine.</strong>
+        </p>
+    </div>
+    <div id="bodymainmiddlePan">
+        <div style="color: black; margin-left: 15%">
+            <h2 class="searchTipHeader">Searching the LinkSets</h2>
+            <p>
+                Let's say you came to RIFAS and you are looking for iRobot movie. The first thing you shoud do
+                is to search the RIFAS for iRobot string. If none results are found you should use DIS (Deep Internet Scan)
+                to make a realtime internet scan for iRobot. The higher the level of DIS the deeper the scan will be.
+                It is possible that DIS was unable to locate any iRobot LinkSet on the internet (only junk was found).
+                Now we have to be more specific. Release year of iRobot was 2004 and you most likely want high quality
+                DVDRIP release. So search for "iRobot DVDRIP (2004)". I guarantee you that there will be more positive
+                results from the DIS. The more specific you are, the better chance for finding what you are looking for.
+            </p>
+            <br />
+            <h2 class="searchTipHeader">Terms</h2>
+            <div>
+                A query is broken up into terms and operators. There are two types of terms: Single Terms and Phrases.
+                <br /><br />
+                A Single Term is a single word such as "test" or "hello".
+                <br /><br />
+                A Phrase is a group of words surrounded by double quotes such as "hello dolly".
+                <br /><br />
+                Multiple terms can be combined together with Boolean operators to form a more complex query (see below).
+            </div>
+            <br />
+            <h2 class="searchTipHeader">Fields</h2>
+            <div>
+                RIFAS supports fielded data. When performing a search you can either specify a field, or use the default field. The field names and default field is implementation specific.
+                <br /><br />
+                You can search any field by typing the field name followed by a colon ":" and then the term you are looking for.
+                <br /><br />
+                As an example, let's assume a RIFAS index contains two fields, <i>name</i> and <i>description</i> and both are default fields.
+                If you want to find the LinkSet named "The Right Way" which contains the description "don't go this way", you can enter:
+                <p class="searchTipCode">
+                    name:"The Right Way" AND description:go
+                </p>
+                <br /><br />
+                Note: The field is only valid for the term that it directly precedes, so the query
+                <p class="searchTipCode">
+                    name:Do it right
+                </p>
+                <br />
+                Will only find "Do" in the title field. It will find "it" and "right" in the default field (in this case the text field).
+                <br /><br />
+                RIFAS default fields:<br />
+                <p class="searchTipCode">
+                    name (LinkSet name)<br />
+                    description (LinkSet description)<br />
+                    tags.binder (LinkSet tags)<br />
+                    links.url (LinkSet associated urls)<br />
+                    webpage.url (Url of webpage)<br />
+                    webpage.title (Title of webpage associtated with LinkSet)<br />
+                </p>
+                <br />
+            </div>
+            <h2 class="searchTipHeader">Wildcard Searches</h2>
+            <div>
+                RIFAS supports single and multiple character wildcard searches within single terms (not within phrase queries).
+                <br /><br />
+                To perform a single character wildcard search use the "?" symbol.
+                <br /><br />
+                To perform a multiple character wildcard search use the "*" symbol.
+                <br /><br />
+                The single character wildcard search looks for terms that match that with the single character replaced. For example, to search for "text" or "test" you can use the search:
+                <p class="searchTipCode">te?t</p>
+                <br />
+                Multiple character wildcard searches looks for 0 or more characters. For example, to search for test, tests or tester, you can use the search:
+                <p class="searchTipCode">test*</p>
+                <br />
+                You can also use the wildcard searches in the middle of a term.
+                <p class="searchTipCode">te*t</p>
+                <br />
+                Note: You cannot use a * or ? symbol as the first character of a search.
+            </div>
+            <br /><br />
+            <h2 class="searchTipHeader">Fuzzy Searches</h2>
+            <div>
+                RIFAS supports fuzzy searches based on the Levenshtein Distance, or Edit Distance algorithm.
+                To do a fuzzy search use the tilde, "~", symbol at the end of a Single word Term.
+                For example to search for a term similar in spelling to "roam" use the fuzzy search:
+                <p class="searchTipCode">roam~</p>
+                This search will find terms like foam and roams.
+                <br /><br />
+                An additional (optional) parameter can specify the required similarity. The value is between 0 and 1, with a value closer to 1 only terms with a higher similarity will be matched. For example:
+                <p class="searchTipCode">roam~0.8</p>
+                <br />
+                The default that is used if the parameter is not given is 0.5.
+            </div>
+            <br /><br />
+            <h2 class="searchTipHeader">Another Important Topics</h2>
+            <div>
+                <ul style="list-style-type:square;margin-left: 20px;">
+                    <li>Proximity Searches</li>
+                    <li>Range Searches</li>
+                    <li>Boosting a Term</li>
+                    <li>Boolean Operators (AND + NOT -)</li>
+                    <li>Grouping</li>
+                    <li>Field Grouping</li>
+                    <li>Escaping Special Characters</li>
+                </ul>
+                <br />
+                To lear more about the topics mentioned above please refer to the <a href="http://lucene.apache.org/java/2_4_0/queryparsersyntax.html#Overview">Lucene Documentation</a>.
+            </div>
+        </div>
+    </div>
+</div>

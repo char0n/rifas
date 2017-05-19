@@ -1,0 +1,45 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>About RIFAS</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+       <p>
+            <strong>RIFAS</strong> stands for <strong>R</strong>apid <strong>I</strong>nternet <strong>F</strong>ile
+            <strong>A</strong>llocation<strong> S</strong>ervice.
+            Rifas is specialized search engine and library capable of search for
+            files (audio, video, games etc.) that are present on world wide web (internet). Currenty supported
+            storage is <a href="http://rapidshare.com">http://rapidshare.com</a>. We are preparing support for
+            every bigger internet storage engine. A Part of RIFAS project is desktop application capable of searching
+            for your files without using web browser.
+        </p>
+        <br /><br />
+        <p>
+            RIFAS consists of <strong>web interface</strong> and <strong>swing desktop program</strong>. Web interface consist of internal library
+            and realtime internet search. All results found by realtime search called <strong>DIS</strong> (Deep Internet Scan) are
+            stored in internat library and are indexed. <a href="$request.contextPath/downloads/">RifasGUI</a> (RIFAS desktop program) is implemented in such way,
+            that it should be capable of copying most of web interface functionality.
+        </p>
+        <br /><br />
+        <p>
+            The base entity of RIFAS project is <strong>LinkSet</strong>. LinkSet consist of <strong>Links</strong> which are characterized by any sort
+            of mutual relationship. LinkSet has two states. LinkSet can be <strong>checked</strong> and <strong>unchecked</strong>. If all of the Links
+            in LinkSet are active, LinkSet is considered active. If none Link is active, then LinkSet is considered
+            deleted. Deleted LinkSets are removed from internal library every two months.
+        </p>
+        <br /><br />
+        <p>
+            When DIS (Deep Internet Scan) crawle internet pages to bring you fresh results, it makes <strong>snapshot</strong> of all pages
+            that are beeing scaned and associate this snapshot with the LinkSet/s beeing found on the page. This helps
+            you find the source of the LinkSet and if LinkSet is <strong>password protected</strong> you can look for password in
+            a snapshot.
+        </p>
+        <br /><br />
+        <p>
+            We hope that this project will make your life a lot easier and that by means of RIFAS, searching for internet files
+            will become fun and not hard work experience.
+        </p>
+        <br /><br />
+       </div>
+    </div>
+</div>

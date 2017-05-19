@@ -1,0 +1,30 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>Services</h1>
+        <br />
+        <p>
+            RIFAS brings you revolutionary services concerning file allocation on
+            internet. Try them on absolutely <strong>free</strong>.
+        </p>
+    </div>
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+           <ul>
+                <li>
+                    <div style="width: 70px;height: 90px;float:left;margin-right: 20px">
+                        <a href="$request.contextPath/imdb/search/"><img src="$request.contextPath/images/imdb_logo1.gif" width="62" height="38" alt="Imdb RIFAS search" border="0" /></a>
+                    </div>
+                    <a href="$request.contextPath/imdb/search/"><strong>Imdb RIFAS search</strong></a>
+                    <br />
+                    Imdb search is a unique concept in searching for movies on internet.
+                    Every released movie has an <a href="http://www.imdb.com/" rel="nofollow">Imdb</a> record. We search this
+                    records and associate LinkSets with Imdb. Once the LinkSet is associated with Imdb,
+                    we can further associate him with possible <a href="http://www.opensubtitles.org/" rel="nofollow">subtitles</a>. You can find your movie and subtitles
+                    by one RIFAS click.
+                </li>
+           </ul>
+           <br clear="all" /><br />
+           <br />
+       </div>
+    </div>
+</div>

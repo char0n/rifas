@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.MoviePerson" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="MoviePerson">
+    <cache region="org.rifasproject.domain.MoviePerson" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="assigned"/>
+    </id>
+    <property column="name" length="255" name="name" not-null="true" type="string"/>
+    <set cascade="none" inverse="true" lazy="true" name="movies" table="MovieCast">
+      <cache usage="read-write"/>
+      <key column="personId"/>
+      <many-to-many class="org.rifasproject.domain.Movie" column="movieId"/>
+    </set>
+  </class>
+</hibernate-mapping>

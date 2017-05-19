@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName">
+            <value>org.postgresql.Driver</value>
+        </property>
+        <property name="url">
+            <value>jdbc:postgresql://localhost:5432/rifas</value>
+        </property>
+        <property name="username">
+            <value>postgres</value>
+        </property>
+        <property name="password">
+            <value>*****</value>
+        </property>
+    </bean>
+
+    <bean id="c3p0DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+        destroy-method="close">
+        <property name="driverClass" value="org.postgresql.Driver"/>
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/rifas"/>
+        <property name="properties">
+            <props>
+                <prop key="c3p0.acquire_increment">5</prop>
+                <prop key="c3p0.idle_test_period">100</prop>
+                <prop key="c3p0.max_size">100</prop>
+                <prop key="c3p0.max_statements">0</prop>
+                <prop key="c3p0.min_size">10</prop>
+                <prop key="user">postgres</prop>
+                <prop key="password">kill3mALL</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean id="mainTransactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+          <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven  transaction-manager="mainTransactionManager"/>
+
+    <!-- Hibernate SessionFactory -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="c3p0DataSource" />
+        <property name="mappingResources">
+            <list>
+                <value>org/rifasproject/domain/LinkSet.hbm.xml</value>
+                <value>org/rifasproject/domain/Link.hbm.xml</value>
+                <value>org/rifasproject/domain/WebPage.hbm.xml</value>
+                <value>org/rifasproject/domain/Tag.hbm.xml</value>
+                <value>org/rifasproject/domain/SearchKeyword.hbm.xml</value>
+                <value>org/rifasproject/domain/Comment.hbm.xml</value>
+                <value>org/rifasproject/domain/ArchivedLinkSet.hbm.xml</value>
+                <value>org/rifasproject/domain/Movie.hbm.xml</value>
+                <value>org/rifasproject/domain/MoviePerson.hbm.xml</value>
+                <value>org/rifasproject/domain/MovieProperty.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+        <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+            <prop key="hibernate.show_sql">false</prop>
+            <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
+            <prop key="hibernate.search.default.indexBase">lucene/index</prop>
+            <prop key="hibernate.search.default.optimizer.operation_limit.max">1000</prop>
+            <prop key="hibernate.search.default.optimizer.transaction_limit.max">100</prop>            
+            <prop key="hibernate.cache.provider_class">com.googlecode.hibernate.memcached.MemcachedCacheProvider</prop>
+            <prop key="hibernate.memcached.cacheTimeSeconds">3600</prop>
+            <prop key="hibernate.cache.use_second_level_cache">true</prop>
+            <prop key="hibernate.cache.use_query_cache">true</prop>
+        </props>
+        </property>
+        <property name="eventListeners">
+           <map>
+               <entry key="post-update" value-ref="searchListener" />
+               <entry key="post-insert" value-ref="searchListener" />
+               <entry key="post-delete" value-ref="searchListener" />
+           </map>
+        </property>
+    </bean>
+
+    <bean id="searchListener" class="org.hibernate.search.event.FullTextIndexEventListener" />
+
+    <bean id="dao" abstract="true" class="org.rifasproject.persistence.AbstractHibernateSpringDao">
+        <property name="sessionFactory">
+            <ref local="sessionFactory"/>
+        </property>
+    </bean>
+
+    <bean id="linkSetDao" parent="dao" class="org.rifasproject.persistence.domain.LinkSetDao" />
+    <bean id="tagsDao" parent="dao" class="org.rifasproject.persistence.domain.TagsDao" />
+    <bean id="webPageDao" parent="dao" class="org.rifasproject.persistence.domain.WebPageDao" />
+    <bean id="linksDao" parent="dao" class="org.rifasproject.persistence.domain.LinksDao" />
+    <bean id="searchKeywordDao" parent="dao" class="org.rifasproject.persistence.domain.SearchKeywordDao" />
+    <bean id="commentsDao" parent="dao" class="org.rifasproject.persistence.domain.CommentsDao" />
+    <bean id="archiveDao" parent="dao" class="org.rifasproject.persistence.domain.ArchiveDao" />
+    <bean id="movieDao" parent="dao" class="org.rifasproject.persistence.domain.MovieDao" />
+    <bean id="moviePersonDao" parent="dao" class="org.rifasproject.persistence.domain.MoviePersonDao" />
+</beans>

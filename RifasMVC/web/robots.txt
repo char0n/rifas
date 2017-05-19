@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /download/
+Disallow: /webpages/showcontent/
+Sitemap: http://rifasproject.org/sitemaps/

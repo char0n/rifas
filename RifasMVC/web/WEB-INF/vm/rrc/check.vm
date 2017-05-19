@@ -1,0 +1,63 @@
+#set($layout = "layouts/xmlLayout.vm")
+<div id="rrcSummary">
+    <a href="http://rifasproject.org">Rifas Remote Checker</a>
+    <a title="What is this?" href="http://rifasproject.org/downloads/#rrc">(RRC)</a>
+    <br /><br />
+    <div>
+        [ <a href="#" onclick="rrcShowExport();return false;">Export</a> ]
+    </div>
+</div>
+<div id="rrcExport" style="display:none">
+    <textarea readonly="readonly" name="rrcExport">#foreach($link in $links)$escape.html($link.url)&#10;#end</textarea>
+</div>
+<div id="rrcLinkReport">
+    <table cellspacing="1" cellpadding="1">
+        <tr>
+            <th>&nbsp;&nbsp;</th>
+            <th>Link</th>
+            <th>Size</th>
+        </tr>
+    #set ($active = 0)
+    #set ($size   = 0)
+    #set ($count  = 0)
+    #set ($maxLength = 80)
+    #foreach ($link in $links)
+       #set ($linkUrl = $link.url)
+       #if ($linkUrl.length() > $maxLength)
+            #set ($point1   = ($linkUrl.length() / 2) - (($linkUrl.length() - $maxLength) /2))
+            #set ($point2 =  $point1 + ($linkUrl.length() - $maxLength))
+            #set ($linkUrl   = $linkUrl.substring(0, $point1)+"..."+$linkUrl.substring($point2, $linkUrl.length()))
+       #end
+       #if ($link.active == true)
+        <tr>
+            <td>&nbsp;</td>
+            <td style="width: 90%">
+               <div class="directDownload">&nbsp;<a title="Direct download" href="$escape.html($link.url)" rel="nofollow"><span class="active">$escape.html($linkUrl)</span></a></div>
+            </td>
+            <td>&nbsp;$linkSizeUtil.formatSize($link.size)</td>
+        </tr>
+        #set ($size   = $size + $link.size)
+        #set ($active = $active + 1)
+       #else
+        <tr>
+            <td>&nbsp;</td>
+            <td style="width: 90%">
+                <div class="directDownload">&nbsp;<a title="Direct download" href="$escape.html($link.url)" rel="nofollow"><span class="deleted">$escape.html($linkUrl)</span></a></div>
+            </td>
+            <td>&nbsp;0.0B</td>
+        </tr>
+       #end
+       #set($count = $count + 1)
+    #end
+       <tr>
+           <td>&nbsp;</td>
+           <td>
+                &nbsp;<strong>Links</strong> ($count),
+                <strong>Active</strong> ($active/$count) 
+           </td>
+           <td>
+               &nbsp;$linkSizeUtil.formatSize($size)
+           </td>
+       </tr>
+    </table>
+</div>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.Movie" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="Movie">
+    <cache region="org.rifasproject.domain.Movie" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="assigned"/>
+    </id>
+    <property column="title" length="255" name="title" not-null="true" type="string"/>
+    <property column="year" length="4" name="year" not-null="true" type="string"/>
+    <property column="plot" name="plot" type="text"/>
+    <property column="fullPlot" name="fullPlot" type="text"/>
+    <property column="coverData" name="coverData"/>
+    <property column="rating" name="rating" type="float"/>
+    <property column="votes" name="votes" type="integer"/>
+    <property column="tagline" name="tagline" type="text"/>
+    <property column="runtime" length="255" name="runtime" type="string"/>
+    <property column="trivia" name="trivia" type="text"/>
+    <property column="goofs" name="goofs" type="text"/>
+    <property column="awards" length="255" name="awards" type="string"/>
+    <property column="akas" length="255" name="akas" type="string"/>
+    <!-- Must manualy alter moviecast_key for (personId, movieid, type) -->
+    <set cascade="all" lazy="true" name="cast" table="MovieCast">
+      <cache usage="read-write"/>
+      <key column="movieId"/>
+      <composite-element class="org.rifasproject.domain.MovieCast">
+        <parent name="movie"/>
+        <property column="type" name="type" not-null="true">
+          <type name="org.hibernate.type.EnumType">
+            <param name="enumClass">org.rifasproject.domain.MoviePersonType</param>
+          </type>
+        </property>
+        <property column="character" length="255" name="character" not-null="false" type="string"/>
+        <many-to-one cascade="save-update" column="personId" fetch="join" name="moviePerson"/>
+      </composite-element>
+    </set>
+    <set cascade="all-delete-orphan" inverse="true" lazy="true" name="languages" table="MovieProperty" where="type=0">
+      <cache usage="read-write"/>
+      <key column="movieId"/>
+      <one-to-many class="org.rifasproject.domain.MovieProperty"/>
+    </set>
+    <set cascade="all-delete-orphan" inverse="true" lazy="true" name="countries" table="MovieProperty" where="type=1">
+      <cache usage="read-write"/>
+      <key column="movieId"/>
+      <one-to-many class="org.rifasproject.domain.MovieProperty"/>
+    </set>
+    <set cascade="all-delete-orphan" inverse="true" lazy="true" name="genres" table="MovieProperty" where="type=2">
+      <cache usage="read-write"/>
+      <key column="movieId"/>
+      <one-to-many class="org.rifasproject.domain.MovieProperty"/>
+    </set>
+    <property column="created" index="created_idx" name="created" not-null="true"/>
+    <property column="updated" name="updated" not-null="false"/>
+  </class>
+</hibernate-mapping>

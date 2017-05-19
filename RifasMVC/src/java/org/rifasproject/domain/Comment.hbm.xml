@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <!-- manualy drop foreign key on itemId -->
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.Comment" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <cache region="org.openphrases.domain.Comment" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">comment_id_seq</param>
+      </generator>
+    </id>
+    <property column="author" length="15" name="author" not-null="true" type="string"/>
+    <property column="email" length="70" name="email" not-null="false" type="string"/>
+    <property column="web" length="80" name="web" not-null="false" type="string"/>
+    <property column="message" name="message" not-null="true" type="text"/>
+    <property column="created" index="createdIdx" name="created" not-null="true"/>
+    <property column="itemId" index="itemIdowner" name="itemId" not-null="true"/>
+    <property column="owner" index="itemIdowner" name="owner" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.CommentOwner</param>
+      </type>
+    </property>
+    <many-to-one cascade="evict" class="org.rifasproject.domain.Comment" column="parentId" lazy="proxy" name="parent" not-null="false"/>
+  </class>
+</hibernate-mapping>

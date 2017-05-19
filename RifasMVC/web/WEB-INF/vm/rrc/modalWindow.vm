@@ -1,0 +1,16 @@
+#set($layout = "layouts/xmlLayout.vm")
+<div id="rrcBox">
+    <div id="rrcProgressSumary">
+        <a href="http://rifasproject.org">Rifas Remote Checker</a>
+        <a title="What is this?" href="http://rifasproject.org/downloads/#rrc">(RRC)</a>
+    </div>
+    <div id="rrcProgressIcon">
+        <img src="http://rifasproject.org/images/scan_progress.gif" alt="Checking links..." width="36" height="36" />
+    </div>
+    <div id="rrcProgressText">
+        &nbsp;&nbsp;Checking links...
+    </div>
+    <br />
+</div>
+<div id="rrcLinkCheckedBox" style="display:none"></div>
+<p id='rrcClose'><a href='#' class='lbAction' rel='deactivate'>[ Close ]</a></p>

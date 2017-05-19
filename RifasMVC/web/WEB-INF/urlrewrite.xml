@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--
+
+    Configuration file for UrlRewriteFilter
+    http://tuckey.org/urlrewrite/
+
+-->
+<urlrewrite>
+    <outbound-rule>
+        <note>
+            The outbound-rule specifies that when response.encodeURL is called (if you are using JSTL c:url)
+            the url /rewrite-status will be rewritten to /test/status/.
+
+            The above rule and this outbound-rule means that end users should never see the
+            url /rewrite-status only /test/status/ both in thier location bar and in hyperlinks
+            in your pages.
+        </note>
+        <from>/rewrite-status</from>
+        <to>/test/status/</to>
+    </outbound-rule>
+
+    <rule>
+        <from>^/$</from>
+        <to>/home/homepage.htm</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/?$</from>
+        <to>/linksets/search.htm</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)$</from>
+        <to>/linksets/search.htm?keyword=$1</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/page/([0-9]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;page=$2</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/page/([0-9]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;page=$3</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/storage/([a-z]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;storage=$3</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/storage/([a-z]+)/page/([0-9]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;storage=$3&amp;page=$4</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/storage/([a-z]+)/filter/(all|checked|unchecked|active|deleted)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;storage=$3&amp;filter=$4</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/storage/([a-z]+)/filter/(all|checked|unchecked|active|deleted)/page/([0-9]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;storage=$3&amp;filter=$4&amp;page=$5</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/storage/([a-z]+)/filter/(all|checked|unchecked|active|deleted)/sort/([0-9]+)/(asc|desc)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;storage=$3&amp;filter=$4&amp;sortBy=$5&amp;sortOrder=$6</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/([^\/]+)/in/([a-z]+)/storage/([a-z]+)/filter/(all|checked|unchecked|active|deleted)/sort/([0-9]+)/(asc|desc)/page/([0-9]+)$</from>
+        <to>/linksets/search.htm?keyword=$1&amp;fileType=$2&amp;storage=$3&amp;filter=$4&amp;sortBy=$5&amp;sortOrder=$6&amp;page=$7</to>
+    </rule>
+    <rule>
+        <from>^/linksets/search/in/([a-z]+)/storage/([a-z]+)/filter/(all|checked|unchecked|active|deleted)$</from>
+        <to>/linksets/search.htm?fileType=$1&amp;storage=$2</to>
+    </rule>
+    <rule>
+        <from>^/linksets/dis/level([1-4]{1})$</from>
+        <to>/linksets/dis.htm?level=$1</to>
+    </rule>
+    <rule>
+        <from>^/linksets/show/([a-z0-9]+)$</from>
+        <to>/linksets/show.htm?uuid=$1</to>
+    </rule>
+    <rule>
+        <from>^/linksets/show/([a-z0-9]+)/comments$</from>
+        <to>/linksets/show.htm?uuid=$1&amp;select=comments</to>
+    </rule>
+    <rule>
+        <from>^/linksets/check/?$</from>
+        <to>/linksets/check.htm</to>
+    </rule>
+    <rule>
+        <from>^/linksets/export/window/for/([a-z0-9]+)$</from>
+        <to>/texts/linkSetExport.htm?uuid=$1</to>
+    </rule>
+    <rule>
+        <from>^/linksets/export/([a-z0-9]+)/to/openpaste$</from>
+        <to>/linksets/exportOpenpaste.htm?uuid=$1</to>
+    </rule>
+    <rule>
+        <from>^/webpages/show/([0-9]+)$</from>
+        <to>/webpages/show.htm?id=$1</to>
+    </rule>
+    <rule>
+        <from>^/webpages/show/([0-9]+)/page/([0-9]+)$</from>
+        <to>/webpages/show.htm?id=$1&amp;page=$2</to>
+    </rule>
+    <rule>
+        <from>^/webpages/showcontent/([0-9]+)$</from>
+        <to>/webpages/showContent.htm?id=$1</to>
+    </rule>
+    <rule>
+        <from>^/downloads/$</from>
+        <to>/downloads/list.htm</to>
+    </rule>
+    <rule>
+        <from>^/download/(.+)$</from>
+        <to>/downloads/affiliateDownload.htm?linkSet=$1</to>
+    </rule>
+    <rule>
+        <from>^/contact/$</from>
+        <to>/contact/contactinfo.htm</to>
+    </rule>
+    <rule>
+        <from>^/contact/sendemail$</from>
+        <to>/contact/sendEmail.htm</to>
+    </rule>
+    <rule>
+        <from>^/about/$</from>
+        <to>/texts/about.htm</to>
+    </rule>
+    <rule>
+        <from>^/tips/searchtips$</from>
+        <to>/texts/searchtips.htm</to>
+    </rule>
+    <rule>
+        <from>^/schema/export$</from>
+        <to>/schema/export.htm</to>
+    </rule>
+    <rule>
+        <from>^/sitemaps(/)?$</from>
+        <to>/sitemaps/readindex.htm</to>
+    </rule>
+    <rule>
+        <from>^/searchkeywords/getrelated/for/(.+)$</from>
+        <to>/searchkeywords/getRelated.htm?phrase=$1</to>
+    </rule>
+    <rule>
+        <from>^/comments/get/commentform/for/([0-9]+)/([0-9]+)$</from>
+        <to>/comments/commentForm.htm?itemId=$1&amp;owner=$2</to>
+    </rule>
+    <rule>
+        <from>^/comments/get/replyform/for/([0-9]+)/([0-9]+)/for/comment/([0-9]+)$</from>
+        <to>/comments/replyForm.htm?itemId=$1&amp;owner=$2&amp;commentId=$3</to>
+    </rule>
+    <rule>
+        <from>^/comments/addcomment/for/([0-9]+)/([0-9]+)$</from>
+        <to>/comments/addComment.htm?itemId=$1&amp;owner=$2</to>
+    </rule>
+    <rule>
+        <from>^/comments/getcomments/for/([0-9]+)/([0-9]+)</from>
+        <to>/comments/getComments.htm?itemId=$1&amp;owner=$2</to>
+    </rule>
+    <rule>
+        <from>^/privacy-policy$</from>
+        <to>/texts/privacyPolicy.htm</to>
+    </rule>
+    <rule>
+        <from>^/terms-of-use$</from>
+        <to>/texts/termsOfUse.htm</to>
+    </rule>
+    <rule>
+        <from>^/disclaimer$</from>
+        <to>/texts/disclaimer.htm</to>
+    </rule>
+    <rule>
+        <from>^/links$</from>
+        <to>/links/list.htm</to>
+    </rule>
+    <rule>
+        <from>^/rrc/demo$</from>
+        <to>/rrc/demo.htm</to>
+    </rule>
+    <rule>
+        <from>^/rrc/docs$</from>
+        <to>/rrc/docs.htm</to>
+    </rule>
+    <rule>
+        <from>^/rrc/modalwindow$</from>
+        <to>/rrc/modalWindow.htm</to>
+    </rule>
+    <rule>
+        <from>^/rrc/check$</from>
+        <to>/rrc/check.htm</to>
+    </rule>
+    <rule>
+        <from>^/bookmarks$</from>
+        <to>/texts/bookmarks.htm</to>
+    </rule>
+    <rule>
+        <from>^/filters$</from>
+        <to>/texts/filter.htm</to>
+    </rule>
+    <rule>
+        <from>^/storages$</from>
+        <to>/texts/storage.htm</to>
+    </rule>
+    <rule>
+        <from>^/search-engines$</from>
+        <to>/texts/searchEngines.htm</to>
+    </rule>
+    <rule>
+        <from>^/set-search-engine$</from>
+        <to>/texts/setSearchEngine.htm</to>
+    </rule>
+    <rule>
+        <from>^/archive/show/([a-z0-9]+)$</from>
+        <to>/archive/show.htm?uuid=$1</to>
+    </rule>
+    <rule>
+        <from>^/services/$</from>
+        <to>/texts/services.htm</to>
+    </rule>
+    <rule>
+        <from>^/imdb/search/$</from>
+        <to>/imdb/search.htm</to>
+    </rule>
+    <rule>
+        <from>^/imdb/search/([^\/]+)$</from>
+        <to>/imdb/search.htm?title=$1</to>
+    </rule>
+    <rule>
+        <from>^/imdb/cover/([0-9]+)$</from>
+        <to>/imdb/cover.htm?imdbId=$1</to>
+    </rule>
+    <rule>
+        <from>^/imdb/title/([0-9]+)(/.*)?$</from>
+        <to>/imdb/title.htm?imdbId=$1</to>
+    </rule>
+    <rule>
+        <from>^/imdb/searchasync/subtitles$</from>
+        <to>/imdb/searchAsyncSubtitles.htm</to>
+    </rule>
+    <!--
+
+
+     EXAMPLES
+
+     Redirect one url
+        <rule>
+            <from>/some/old/page.html</from>
+            <to type="redirect">/very/new/page.html</to>
+        </rule>
+
+    Redirect a directory
+        <rule>
+            <from>/some/olddir/(.*)</from>
+            <to type="redirect">/very/newdir/$1</to>
+        </rule>
+
+    Clean a url
+        <rule>
+            <from>/products/([0-9]+)</from>
+            <to>/products/index.jsp?product_id=$1</to>
+        </rule>
+    eg, /products/1234 will be passed on to /products/index.jsp?product_id=1234 without the user noticing.
+
+    Browser detection
+        <rule>
+            <condition name="user-agent">Mozilla/[1-4]</condition>
+            <from>/some/page.html</from>
+            <to>/some/page-for-old-browsers.html</to>
+        </rule>
+    eg, will pass the request for /some/page.html on to /some/page-for-old-browsers.html only for older
+    browsers whose user agent srtings match Mozilla/1, Mozilla/2, Mozilla/3 or Mozilla/4.
+
+    Centralised browser detection
+        <rule>
+            <condition name="user-agent">Mozilla/[1-4]</condition>
+            <set type="request" name="browser">moz</set>
+        </rule>
+    eg, all requests will be checked against the condition and if matched
+    request.setAttribute("browser", "moz") will be called.
+
+    -->
+
+</urlrewrite>

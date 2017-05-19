@@ -1,0 +1,65 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>Links</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+         <p class="centered">
+             If you're interested in exchanging link with us, please <a title="Contact" href="$request.contextPath/contact/">let us know</a>.
+         </p>
+         <div id="linkDirectory">
+            <hr />
+            <div class="screenShot">
+                <img src="http://open.thumbshots.org/image.pxf?url=$escape.url("http://cleveradvice.com")" alt="Keyword analysis and SEO search" title="Keyword analysis and SEO search" />
+            </div>
+            <div class="linkTexts">
+                » <a title="Keyword analysis and SEO search" href="http://cleveradvice.com">CleverAdvice.com</a><br />
+                <p class="URIdesc">Keyword analysis and SEO search</p>
+                &nbsp;&nbsp;&nbsp;<span class="directoryURI">http://cleveradvice.com</span>
+            </div>
+            <br clear="all" />
+            <hr />
+            <div class="screenShot">
+                <img src="http://open.thumbshots.org/image.pxf?url=$escape.url("http://openpaste.org")" alt="OpenPastebin - collaborative debugging tool" title="OpenPastebin - collaborative debugging tool" />
+            </div>
+            <div class="linkTexts">
+                » <a title="OpenPastebin - collaborative debugging tool" href="http://openpaste.org">OpenPaste.org</a><br />
+                <p class="URIdesc">OpenPastebin - collaborative debugging tool</p>
+                &nbsp;&nbsp;&nbsp;<span class="directoryURI">http://openpaste.org</span>
+            </div>
+            <br clear="all" />
+            <hr />
+            <div class="screenShot">
+                <img src="http://open.thumbshots.org/image.pxf?url=$escape.url("http://devmeat.com")" alt="Software Development News" title="Software Development News" />
+            </div>
+            <div class="linkTexts">
+                » <a title="Software Development News" href="http://devmeat.com">DevMeat.com</a><br />
+                <p class="URIdesc">Software Development News</p>
+                &nbsp;&nbsp;&nbsp;<span class="directoryURI">http://devmeat.com</span>
+            </div>
+            <br clear="all" />
+            <hr />
+            <div class="screenShot">
+                <img src="http://open.thumbshots.org/image.pxf?url=$escape.url("http://www.opensubtitles.com")" alt="Subtitles - download DivX subtitles from the biggest open subtitles database" />
+            </div>
+            <div class="linkTexts">
+                » <a title="Subtitles - download DivX subtitles from the biggest open subtitles database" href="http://www.opensubtitles.com">OpenSubtitles.com</a><br />
+                <p class="URIdesc">Subtitles - download DivX subtitles from the biggest open subtitles database</p>
+                &nbsp;&nbsp;&nbsp;<span class="directoryURI">http://www.opensubtitles.com</span>
+            </div>
+            <br clear="all" />
+            <hr />
+            <div class="screenShot">
+                <img src="http://open.thumbshots.org/image.pxf?url=$escape.url("http://www.rsgrabber.com")" alt="RapidShare Links" />
+            </div>
+            <div class="linkTexts">
+                » <a title="World Of RapidShare Links" href="http://www.rsgrabber.com">RapidShare Links</a><br />
+                <p class="URIdesc">World Of RapidShare Links</p>
+                &nbsp;&nbsp;&nbsp;<span class="directoryURI">http://www.rsgrabber.com</span>
+            </div>
+            <br clear="all" />
+            <hr />
+        </div>
+      </div>
+    </div>
+</div>

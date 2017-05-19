@@ -1,0 +1,283 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+            <!-- You will NOT be able to see the ad on your site! This unit is hidden on your page, and will only display to your search engine traffic (from US and CA). To preview, paste the code up on your site, then add #chitikatest=mortgage to the end of your URL in your browser's address bar.  Example:  www.yourwebsite.com#chitikatest=mortgage. This will show you what the ad would look like to a user who is interested in "mortgages." -->
+            <script type="text/javascript"><!--
+            ch_client = "quidproquo";
+            ch_type = "mpu";
+            ch_width = 728;
+            ch_height = 90;
+            ch_color_bg = "F4F4F4";
+            ch_color_border = "F4F4F4";
+            ch_color_title = "929017";
+            ch_color_site_link = "929017";
+            ch_color_text = "707070";
+            ch_non_contextual = 4;
+            ch_vertical ="premium";
+            ch_font_title = "Arial";
+            ch_font_text = "Arial";
+            ch_sid = "Chitika Premium";
+            var ch_queries = new Array( );
+            var ch_selected=Math.floor((Math.random()*ch_queries.length));
+            if ( ch_selected < ch_queries.length ) {
+            ch_query = ch_queries[ch_selected];
+            }
+            //--></script>
+            <script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
+            </script>
+        <h1 onmouseover="TagToTip('toolTip$linkSet.id', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();">$escape.html($linkSet.name)</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+        <div id="bodymiddlePan">
+            <div id="linkSetCheck" style="display: none">
+                <p>LinkSet check</p>
+                <div id="checkProgress">
+                    <img src="$request.contextPath/images/scan_progress.gif" alt="" style="vertical-align: middle"/>
+                    <strong>LinkSet</strong> check in progress...
+                </div>
+            </div>
+            #if ($linkSet.name)
+            <table id="affiliateSearch" style="margin-top:-28px;margin-bottom:0">
+                <tr>
+                    <td>
+                        <a href="$request.contextPath/download/$escape.url($linkSet.name)" title="Download ${escape.html($linkSet.name)}"><img src="$request.contextPath/images/download-icon.png" alt="Download ${escape.html($linkSet.name)}" border="0" /></a>
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;<a href="$request.contextPath/download/$escape.url($linkSet.name)$escape.url(".full.rar")" title="Download ${escape.html($linkSet.name)}.full.rar">${escape.html($linkSet.name)}.full.rar</a>
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;<a href="$request.contextPath/download/$escape.url($linkSet.name)$escape.url(" [FULLVERSION]")" title="Download ${escape.html($linkSet.name)} [FULLVERSION]">${escape.html($linkSet.name)} [FULLVERSION]</a>
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;<a href="$request.contextPath/download/$escape.url("[HIGHSPEED] ")$escape.url($linkSet.name)" title="Download [HIGHSPEED] ${escape.html($linkSet.name)}">[HIGHSPEED] ${escape.html($linkSet.name)}</a>
+                    </td>
+                </tr>
+            </table>
+            #else
+            <table id="affiliateSearch">
+                <tr>
+                    <td rowspan="2">
+                        <a href="$request.contextPath/download/any+files" title="Download LinkSet"><img src="$request.contextPath/images/download-icon.png" alt="Download LinkSet" border="0" /></a>
+                    </td>
+                    <td>
+                        <a href="$request.contextPath/download/any+files">Download LinkSet</a>
+                    </td>
+                </tr>
+            </table>
+            #end
+            <br />
+            <ul id="linkSetTabs">
+                <li id="export" class="active" onclick="switchTab('export', '');">Export</li>
+                <li id="checker" onclick="switchTab('checker', '$linkSet.uuid');">#if ($linkSet.isChecked() == true) Recheck#else Check#end Links($linkSet.links.size())</li>
+                <li id="comments" onclick="switchTab('comments', '$linkSet.id', '0');">Comments ($linkSet.comments.size())</li>
+            </ul>
+            <div class="linkSet" style="border-top: 1px solid #000000">
+                #if ($linkSet.description)<p class="desc">$escape.html($linkSet.description)</p>#else<br />#end
+                #set($maxLinksToShow = 10)
+                #set($displayedLinks = 0)
+                #set($moreShowed = false)
+                #set($active =0)
+                #set($size = $math.toDouble(0))
+                <div class="links">
+                    <table id="links$linkSet.id">
+                    #if ($linkSet.storage.name().equals("RAPIDSHARE"))
+                        <tr>
+                            <td colspan="2">
+                                <p style="margin-top:0;margin-bottom:0">
+                                    <a href="http://rapidshare.com/premium.html?ref=85C1DFE777FB2CE0ADBF76071F20A4E1" target="_blank"><img style="float:left;margin-right: 15px" border="0" src="http://rapidshare.com/img2/bannersmall1.jpg" /></a>
+                                    <strong>Do you want to download all these files at once ?</strong>
+                                    <br />
+                                    <strong>Get <a href="http://rapidshare.com/premium.html?ref=85C1DFE777FB2CE0ADBF76071F20A4E1">premium rapidshare account now !</a></strong>
+                                    <br clear="all" />
+                                </p>
+                            </td>
+                        </tr>
+                    #end
+                    #set ($maxLength = 110)
+                    #foreach ($link in $linkSet.links)
+                       #set ($linkUrl = $link.url)
+                       #if ($linkUrl.length() > $maxLength)
+                            #set ($point1   = ($linkUrl.length() / 2) - (($linkUrl.length() - $maxLength) /2))
+                            #set ($point2 =  $point1 + ($linkUrl.length() - $maxLength))
+                            #set ($linkUrl   = $linkUrl.substring(0, $point1)+"..."+$linkUrl.substring($point2, $linkUrl.length()))
+                       #end
+
+                       #if ($displayedLinks < $maxLinksToShow)
+                           #if ($link.active == true)
+                            <tr>
+                                <td style="width: 80%">
+                                   <div><a title="Direct download" href="$linkObfuscator.encodeNCR($link.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a><span class="active">$linkObfuscator.encodeNCR($linkUrl)</span></div>
+                                   #set($active = $active + 1)
+                                </td>
+                                <td>$linkSizeUtil.formatSize($link.size)</td>
+                            </tr>
+                           #else
+                            <tr>
+                                <td style="width: 80%">
+                                    #if ($linkSet.isChecked() == true)
+                                    <div><a title="Direct download" href="$linkObfuscator.encodeNCR($link.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a><span class="deleted">$linkObfuscator.encodeNCR($linkUrl)</span></div>
+                                    #else
+                                    <div><a title="Direct download" href="$linkObfuscator.encodeNCR($link.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a><span class="inactive">$linkObfuscator.encodeNCR($linkUrl)</span></div>
+                                    #end
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                           #end
+                        #elseif ($displayedLinks >= $maxLinksToShow)
+                           #if ($link.active == true)
+                            <tr style="display:none">
+                                <td style="width: 80%">
+                                    <div><a title="Direct download" href="$linkObfuscator.encodeNCR($link.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a><span class="active">$linkObfuscator.encodeNCR($linkUrl)</span></div>
+                                   #set($active = $active + 1)
+                                </td>
+                                <td>$linkSizeUtil.formatSize($link.size)</td>
+                            </tr>
+                           #else
+                            <tr style="display:none">
+                                <td style="width: 80%">
+                                    #if ($linkSet.isChecked() == true)
+                                    <div><a title="Direct download" href="$linkObfuscator.encodeNCR($link.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a><span class="deleted">$linkObfuscator.encodeNCR($linkUrl)</span></div>
+                                    #else
+                                    <div><a title="Direct download" href="$linkObfuscator.encodeNCR($link.url)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a><span class="inactive">$linkObfuscator.encodeNCR($linkUrl)</span></div>
+                                    #end
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                           #end
+                        #end
+                        #set($displayedLinks = $displayedLinks + 1)
+
+                        #if ($displayedLinks >= $maxLinksToShow && $linkSet.links.size() - $displayedLinks != 0 && $moreShowed == false)
+                           <tr id="moreLinksRowlinks$linkSet.id">
+                               <td colspan="2"><a href="#" onclick="showHiddenLinks('links$linkSet.id'); return false;">...and $math.sub($linkSet.links.size(), $displayedLinks) more</a></td>
+                           </tr>
+                           #set($moreShowed = true)
+                        #end
+                       #set($size = $size + $link.size)
+                    #end
+                    </table>
+                </div>
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td>
+                                #set($tmp1size = $linkSizeUtil.formatSize($size))
+                                <span>Storage</span> ($linkSet.storage.name()) |
+                                <span>Links</span> ($linkSet.links.size()) |
+                                <span>Active</span> ($active/$linkSet.links.size()) |
+                                <span>Size</span> ($tmp1size)|
+                                Source (#foreach ($page in $linkSet.pages) <a onmouseover="Tip('&lt;img style=\'vertical-align: middle\' src=\'$request.contextPath/images/webpage.png\' alt=\'WebPage #$page.id\' width=\'32\' height=\'32\' /&gt; $escape.html($page.url)', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();" href="$request.contextPath/webpages/show/$page.id"><img src="$request.contextPath/images/url_icon.gif" alt="WebPage source" width="16" height="16" border="0" style="vertical-align:middle" /></a>#if ($velocityCount < $linkSet.pages.size())&nbsp;#end #end)
+                            </td>
+                            <td class="right">
+                                #if ($linkSet.isChecked() == true && $active != 0)
+                                    <span>Status</span> (<span class="checked">checked</span>, $date.format($linkSet.lastChecked))                                    
+                                #elseif ($linkSet.isChecked() == true && $active == 0)
+                                    <span>Status</span> (<span class="unchecked">deleted</span>)
+                                #elseif ($linkSet.isChecked() == false)
+                                    <span>Status</span> (<span class="unchecked">unchecked</span>)                                    
+                                #end
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <span>Created</span> ($date.format($linkSet.created)) |
+                                 <span>Comments</span> ($linkSet.comments.size())
+                            </td>
+                            <td class="right">
+                                <span>UUID</span> ($linkSet.uuid)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Tags</span>
+                                (
+                                #foreach ($tag in $linkSet.tags)
+                                    <a href="$request.contextPath/linksets/search/$escape.url($tag.binder)/in/$activeLinkSetType/storage/$linkSet.storage.name().toLowerCase()/filter/all">$escape.html($tag.binder)</a>#if ($velocityCount < $linkSet.tags.size()), #end
+                                #end
+                                )
+                            </td>
+                            <td class="right">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="container">
+                <h2>Link Export</h2>
+                <br />
+                <form action="" method="get">
+                    <textarea readonly="readonly" cols="80" rows="10">#foreach($link in $linkSet.links)$linkObfuscator.encodeNCR($link.url)&#10;#end</textarea>
+                    <a href="$request.contextPath/linksets/export/window/for/$linkSet.uuid" class="lbOn" rel="nofollow" onmouseover="Tip('Export links to openpaste.org', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();"><img src="$request.contextPath/images/export.jpg" alt="Export links" width="48" height="48" border="0" /></a>
+                </form>
+                <br />
+                #parse("layouts/relatedLinkSets.vm")
+                <br />
+                #if ($null.isNotNull($relatedTitles) && $relatedTitles.size() > 0)
+                 <h2>Related Imdb Titles</h2>
+                 <table class="linkSetsList">
+                     <tr>
+                         <td>
+                         #set($titlesSize = $relatedTitles.size())
+                         #set($counter    = 0)
+                         #foreach ($imdbId in $relatedTitles.keySet())
+                          #set($counter = $counter + 1)
+                          <a href="$request.contextPath/imdb/title/$imdbId/$escape.url($relatedTitles.get($imdbId))" title="$escape.html($relatedTitles.get($imdbId))"><img src="$request.contextPath/images/imdb_small.gif" border="0" /></a>
+                          <a href="$request.contextPath/imdb/title/$imdbId/$escape.url($relatedTitles.get($imdbId))" title="$escape.html($relatedTitles.get($imdbId))">$escape.html($relatedTitles.get($imdbId))</a>#if ($counter < $titlesSize), #end
+                         #end
+                         </td>
+                     </tr>
+                 </table>
+                #end
+            </div>
+            <div id="buffer" style="display:none"></div>
+            <br /><br />
+        </div>
+    </div>
+</div>
+<div id="toolTip$linkSet.id" style="display: none">
+    <table style="min-width:500px" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td rowspan="6" style="width: 165px"><img src="$request.contextPath/images/linkset_types/${linkSet.type.name()}.png" alt="$linkSetTypeUtil.searchTextByLinkSetType($linkSet.type)" width="128" height="128" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <strong>
+                #if ($linkSet.name)
+                 $escape.html($linkSet.name)
+                #else
+                 $linkSet.uuid
+                #end
+                </strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100px">LinkSet type:</td>
+            <td>$linkSetTypeUtil.searchTextByLinkSetType($linkSet.type)</td>
+        </tr>
+        <tr>
+            <td>Links:</td>
+            <td>$linkSet.links.size()</td>
+        </tr>
+        <tr>
+            <td>Size:</td>
+            <td>$tmp1size</td>
+        </tr>
+        <tr>
+            <td>Search tags:</td>
+            <td>
+                #foreach ($tag in $linkSet.tags)
+                    <a href="$request.contextPath/linksets/search/$escape.url($tag.binder)/in/$activeLinkSetType/storage/$linkSet.storage.name().toLowerCase()/filter/all">$escape.html($tag.binder)</a>#if ($velocityCount < $linkSet.tags.size()), #end
+                #end
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/comments.js"></script>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/linkSets.js"></script>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/tooltip/wz_tooltip.js"></script>
+<script type="text/javascript" language="Javascript">
+    var linkSetUuid = "$linkSet.uuid";
+    #if ($select == "comments")
+        switchTab("comments", '$linkSet.id', '0');
+    #end
+</script>

@@ -1,0 +1,60 @@
+#macro(pagination)
+## let's go
+#set($coreUrl = "$request.contextPath/$p_urlPattern")
+#set($prev = $p_currentIndex - 1)
+#set($next = $p_currentIndex + 1)
+#set($last = $math.ceil($math.div($p_itemsCount, $p_itemsPerPage)))
+#set($lastCopy = $last)
+#set($preLast = $last - 1)
+#set($lookAroundPages = 6)
+
+#if ($last > 1)
+    <div class="pg">
+    ## pagination matters :)
+    <ul class="pagination-digg">
+    ##previous link
+    #if ($p_currentIndex == 1)
+    <li class="previous-off">&laquo; Previous</li>
+    #else
+        #if ($prev == 1)
+         <li><a href="$coreUrl">&laquo; Previous</a></li>
+        #else
+         <li><a href="${coreUrl}/page/$prev">&laquo; Previous</a></li>
+        #end    
+    #end
+
+    #set($startAt = 1)
+
+    #if ($last > $lookAroundPages)
+        #set($startAt = $p_currentIndex - $lookAroundPages)
+        #set($last = $p_currentIndex + $lookAroundPages)
+
+        #if ($startAt < 1)
+            #set($startAt = 1)
+        #end
+        #if ($last > $lastCopy)
+            #set($last = $lastCopy)
+        #end
+
+    #end
+
+    #foreach($c in [$startAt..$last])
+        #if ($c == $p_currentIndex)
+            <li class="active">$c</li>
+        #else
+          #if ($c == 1)
+            <li><a href="$coreUrl">$c</a></li>
+          #else
+            <li><a href="${coreUrl}/page/$c">$c</a></li>
+          #end             
+        #end
+    #end
+    #if ($p_currentIndex == $last)
+        <li class="next-off">Next &raquo;</li>
+    #else
+        <li class="next"><a href="${coreUrl}/page/$next">Next &raquo;</a></li>
+    #end
+    </ul>
+    </div>
+#end
+#end

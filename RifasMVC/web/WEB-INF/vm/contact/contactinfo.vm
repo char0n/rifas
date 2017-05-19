@@ -1,0 +1,56 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>Contact</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+           If you have any questions or bug report please contact us on email address
+           mentioned below. We shall reponse as soon as possible. Thank you.
+           <br /><br />
+           
+           <br /><br />
+           <form name="contactForm" action="" method="post">
+               <table id="contactForm">
+                   <tr>
+                       <td colspan="2" style="text-align: center">
+                           <img src="$request.contextPath/images/email-image.png" alt="Email" />
+                           <br />
+                       </td>
+                   </tr>
+                   <tr>
+                       <td colspan="2" style="text-align: center">
+                           <span id="busy_indicator" style="display:none"><img src="$request.contextPath/images/scan_progress.gif" alt="Sending..." width="36" height="36" /></span>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>Email:</td>
+                       <td><input size="35" type="text" name="from" maxlength="255" /></td>
+                   </tr>
+                   <tr>
+                       <td>Subject</td>
+                       <td><input size="35" type="text" name="subject" maxlength="200" /></td>
+                   </tr>
+                   <tr>
+                       <td style="vertical-align: top">
+                           <br />Message:
+                       </td>
+                       <td>
+                           <br />
+                           <textarea name="message" cols="55" rows="7"></textarea>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>&nbsp;</td>
+                       <td>
+                            <br />
+                            <input type="button" value="Send" onclick="send();" />
+                            &nbsp;&nbsp;<strong><span id="buffer"></span></strong>
+                       </td>
+                   </tr>
+               </table>
+           </form>
+           <br /><br />
+       </div>
+    </div>
+</div>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/contact.js"></script>

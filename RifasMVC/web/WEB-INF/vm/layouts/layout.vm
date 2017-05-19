@@ -1,0 +1,138 @@
+## init macros
+#parse('macros/pagination.vm')
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>$escape.html($pageTitle)</title>
+        <meta name="description" content="$escape.html($pageDescription)" />
+        <meta name="keywords" content="$escape.html($pageKeywords)" />
+        <meta name="author" content="QuidProQuo inc." />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Language" content="en" />
+        <meta name="google-site-verification" content="QqJAmD2fuKQay2gN2wFAvcWps87fJMDBNm_GGBbcH-A" />
+        <meta name="y_key" content="f667c2b7a5c91fe6" />
+        <meta name="msvalidate.01" content="BC4C323FC64641F464F03B15E57C2A26" />
+        <meta name="netinsert" content="0.0.1.3.1.11.2.1" />
+        #if ($null.isNotNull($metaHeaders))
+         #foreach ($metaName in $metaHeaders.keySet())
+          <meta name="$escape.html($metaName)" content="$escape.html($metaHeaders.get($metaName))" />
+          #if ($metaName == "robots")
+            #set($metaRobots = true)
+          #elseif ($metaName == "X-Robots-Tag")
+            #set($metaXRobotsTag = true)
+          #end
+         #end
+        #end
+        #if ($null.isNull($metaRobots))<meta name="robots" content="index, follow" />#end
+        #if ($null.isNull($metaXRobotsTag))<meta name="X-Robots-Tag" content="index, archive, follow" />#end
+        <link href="$request.contextPath/styles/style.css" rel="stylesheet" type="text/css" />
+        <link href="$request.contextPath/styles/lightbox.css" rel="stylesheet" type="text/css" />
+        #foreach ($stylesheet in $stylesheets)<link href="$request.contextPath/$stylesheet" rel="stylesheet" type="text/css" />#end
+        <link rel="shortcut icon" type="image/x-icon" href="$request.contextPath/images/favicon.ico" />
+        <script type="text/javascript" src="$request.contextPath/javascript/protoculous-1.0.2-packed.js"></script>
+        <script type="text/javascript" src="$request.contextPath/javascript/lightbox.js"></script>
+        <script type="text/javascript" language="Javascript">
+            var contextPath = "$request.contextPath";
+        </script>
+        <!--Start Kampyle Exit-Popup Code-->
+        <script type="text/javascript">
+        var k_push_vars = {
+            "view_percentage": 0,
+            "popup_font_color": "#000000",
+            "popup_background": "#AFAE4C",
+            "header": "Your feedback is important to us!",
+            "question": "Would you be willing to give us a short (1 minute) feedback?",
+            "footer": "Thank you for helping us improve our website",
+            "yes": "Yes",
+            "no": "No",
+            "text_direction": "ltr",
+            "images_dir": "http://cf.kampyle.com/",
+            "yes_background": "#76AC78",
+            "no_background": "#8D9B86",
+            "site_code": 4658131
+        }
+        </script>
+        <script type="text/javascript" src="http://cf.kampyle.com/k_push.js"></script>
+        <!--End Kampyle Exit-Popup Code-->
+
+        <!-- Start Kampyle Css -->
+        <link rel="stylesheet" type="text/css" media="screen" href="http://cf.kampyle.com/k_button.css" />
+        <!-- End Kampyle Css -->
+    </head>
+
+    <body>
+        <div id="twitter">
+            <a href="http://twitter.com/rifasproject" title="RIFAS on Twitter" target="_blank"><img src="$request.contextPath/images/twitter_icon.jpg" width="113" height="42" alt="RIFAS on Twitter" border="0" /></a>
+        </div>
+        <div id="facebook">
+            <a href="http://www.facebook.com/pages/RIFAS/171601378344" title="RIFAS on Facebook" target="_blank"><img src="$request.contextPath/images/facebook_icon.jpg" width="129" height="42" alt="RIFAS on Facebook"/></a>
+        </div>
+        <!--Start Kampyle Feedback Form Button--><div id="k_close_button" class="k_float kc_bottom kc_right"></div><div><a href="http://www.kampyle.com" target="kampyleWindow" id="kampylink" class="k_float k_bottom k_right" onclick="javascript:k_button.open_ff('site_code=4658131&amp;form_id=13344&amp;lang=en');return false;"><img src="http://cf.kampyle.com/en-green-corner-low-right.gif" alt="Feedback Form"/></a></div>
+        <script src="http://cf.kampyle.com/k_button.js" type="text/javascript"></script>
+        <!--End Kampyle Feedback Form Button-->
+        <div id="topPan">
+            <a href="$request.contextPath/"><img src="$request.contextPath/images/logo.gif" alt="RIFAS Project" border="0" title="RIFAS Project" width="196" height="56" /></a>
+
+            <ul>
+                #foreach($menuItem in $menuItems)
+                 #if ($menuItem.dictionary.findByKey("acronym").value == $activeMenuItem)
+                    <li class="home" style="cursor: pointer" onclick="window.location.href='$request.contextPath/$menuItem.dictionary.findByKey("url").value'">$escape.html($menuItem.dictionary.findByKey("text").value)</li>
+                 #else
+                    <li><a href="$request.contextPath/$menuItem.dictionary.findByKey("url").value">$escape.html($menuItem.dictionary.findByKey("text").value)</a></li>
+                 #end
+                #end
+            </ul>
+
+            <ul class="dropdown">
+                <li><a href="$request.contextPath/tips/searchtips">tips</a></li>
+            </ul>
+        </div>
+
+        $screen_content
+
+        <div id="footermainPan">
+            <div id="footerPan">
+                <p class="html"><a href="http://validator.w3.org/check?uri=referer" target="_blank">html</a></p>
+                <p class="css"><a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank">css</a></p>
+                <ul>
+                   <li><a href="$request.contextPath/privacy-policy">Privacy Policy</a> | </li>
+                   <li><a href="$request.contextPath/terms-of-use">Terms of Use</a> | </li>
+                   <li><a href="$request.contextPath/disclaimer">Disclaimer</a> | </li>
+                   <li><a href="$request.contextPath/links">Links</a></li>
+                </ul>
+                <br />
+                <p class="copyright">
+                    &copy; 2009 QuidProQuo inc.
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="http://whos.amung.us/stats/q5aailvrj6w5/"><img src="http://whos.amung.us/swidget/q5aailvrj6w5.gif" width="80" height="15" border="0" title="Click to see how many people are online" alt="" /></a>
+                </p>
+                <ul class="templateworld">
+                    <li><a href="http://openpaste.org" title="Advanced collaborative debugging tool">OpenPaste.org</a></li>
+                    <li><strong>|</strong></li>
+                    <li><a href="http://devmeat.com">DevMeat.com</a></li>
+                    <li><strong>|</strong></li>
+                    <li><a href="http://cleveradvice.com/">CleverAdvice.com</a></li>
+                    <li><strong>|</strong></li>                    
+                    <li><a title="Bookmark Rifas Project" rel="nofollow" href="$request.contextPath/bookmarks" class="lbOn"><img border="0" src="$request.contextPath/images/bookmarks.gif" alt="Bookmark Rifas Project" width="125" height="16" /></a></li>
+                </ul>
+                <div id="outLinks">
+                    <a title="Download Games, Torrents, Movies, ..." href="http://www.phazeddl.com/">PhazeDDL Warez Downloads</a>
+                    <a title='Sports Web Directory' href='http://www.web-sites-directory.com/category_sports.html'>Sports Web Directory</a>
+                    <a href="http://www.xtlinks.com">Add Url</a>
+                    <a href="http://www.r-tt.com" title="Data Recovery">Data Recovery</a>
+                    <a href="http://www.opensubtitles.org/en/player" title="Open Subtitles MKV Player">MKV Player</a>                     
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+        try {
+        var pageTracker = _gat._getTracker("UA-385933-7");
+        pageTracker._trackPageview();
+        } catch(err) {}</script>
+    </body>
+</html>

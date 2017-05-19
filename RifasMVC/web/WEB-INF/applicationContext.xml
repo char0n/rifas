@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+    <!-- ADD PERSISTENCE SUPPORT HERE (jpa, hibernate, etc) -->
+
+    <aop:aspectj-autoproxy />
+
+    <!-- data access, persistence -->
+    <import resource="data-config.xml" />
+
+    <bean id="googleSearchEngine" class="org.rifasproject.services.GoogleSearchEngine">
+       <property name="storage" value="RAPIDSHARE" />
+       <property name="source" value="http://ajax.googleapis.com/ajax/services/search/web?v=1.0" />
+       <property name="name" value="Google Search API" />
+       <property name="description" value="Google Search API based on REST" />
+       <property name="type" value="REST" />
+    </bean>
+    <bean id="yahooSearchEngine" class="org.rifasproject.services.YahooSearchEngine">
+       <property name="storage" value="RAPIDSHARE" />
+       <property name="source" value="http://boss.yahooapis.com/ysearch/web/v1/" />
+       <property name="name" value="Yahoo Search API" />
+       <property name="description" value="Yahoo Boss Search API based on JSON" />
+       <property name="type" value="JSON" />
+    </bean>
+   <bean id="downloader" class="org.rifasproject.services.DefaultUrlDownloader">
+       <property name="urlTimeout" value="2000" />
+   </bean>
+   <bean id="rapidshareLinkChecker" class="org.rifasproject.services.RapidshareLinkChecker" />
+   <bean id="rapidshareParser" class="org.rifasproject.services.RapidshareUrlParser" depends-on="linkComparator">
+       <property name="comparator" ref="linkComparator" />
+       <property name="linkRegex" value="RAPIDSHARE_LINK" />
+       <property name="linkDescRegex" value="RAPIDSHARE_LINK_DESC" />
+   </bean>
+   <bean id="linkComparator" class="org.rifasproject.util.LinkComparator">
+       <constructor-arg index="0">
+           <value>RAPIDSHARE_LINK</value>
+       </constructor-arg>
+   </bean>
+
+   <bean id="opensubtitlesApi" class="sk.mortality.util.opensubtitles.OpensubtitlesXmlRpcServiceImpl" scope="prototype">
+       <property name="connectionTimeout" value="500" />
+       <property name="replyTimeout" value="500" />
+   </bean>
+
+   <bean id="twitterApi" class="twitter4j.AsyncTwitter">
+       <constructor-arg index="0" value="rifasproject" />
+       <constructor-arg index="1" value="qzb7kw2et" />
+   </bean>
+   <bean id="twitterAspectService" class="org.rifasproject.services.TwitterService">
+       <property name="twitterApi" ref="twitterApi" />
+   </bean>
+
+   <bean id="linkSetValidator" class="org.rifasproject.util.validation.LinkSetValidator" />
+   <bean id="webPageValidator" class="org.rifasproject.util.validation.WebPageValidator" />
+   <bean id="linkValidator" class="org.rifasproject.util.validation.LinkValidator" />
+   <bean id="tagValidator" class="org.rifasproject.util.validation.TagValidator" />
+   <bean id="commentValidator" class="org.rifasproject.util.validation.CommentValidator" />
+   <bean id="contactFormValidator" class="org.rifasproject.util.validation.ContactFormValidator" />
+
+   <bean id="linkSetService" class="org.rifasproject.services.LinkSetServiceImpl" depends-on="googleSearchEngine, downloader, rapidshareParser">
+       <property name="searchEngines">
+           <map>
+               <entry key="GOOGLE" value-ref="googleSearchEngine" />
+               <entry key="YAHOO" value-ref="yahooSearchEngine" />
+           </map>
+       </property>
+       <property name="downloader" ref="downloader" />
+       <property name="parsers">
+           <map>
+               <entry key="RAPIDSHARE" value-ref="rapidshareParser" />
+           </map>               
+       </property>
+       <property name="checkers">
+           <map>
+               <entry key="RAPIDSHARE" value-ref="rapidshareLinkChecker" />
+           </map>
+       </property>
+       <property name="linkSetDao" ref="linkSetDao" />
+       <property name="archiveDao" ref="archiveDao" />
+       <property name="tagsDao" ref="tagsDao" />
+       <property name="webPageDao" ref="webPageDao" />
+       <property name="linksDao" ref="linksDao" />
+       <property name="searchKeywordDao" ref="searchKeywordDao" />
+       <property name="commentsDao" ref="commentsDao" />
+       <property name="linkSetValidator" ref="linkSetValidator" />
+       <property name="webPageValidator" ref="webPageValidator" />
+       <property name="linkValidator" ref="linkValidator" />
+       <property name="tagValidator" ref="tagValidator" />
+   </bean>
+
+   <bean id="webPageService" class="org.rifasproject.services.WebPageServiceImpl">
+       <property name="webPageDao" ref="webPageDao" />
+       <property name="linksDao" ref="linksDao" />
+   </bean>
+
+   <bean id="commentsService" class="org.rifasproject.services.CommentsServiceImpl" depends-on="linkSetService, commentsDao, linkSetDao">
+       <property name="commentsDao" ref="commentsDao" />
+       <property name="linkSetDao" ref="linkSetDao" />
+       <property name="linkSetService" ref="linkSetService" />
+       <property name="archiveService" ref="archiveService" />
+       <property name="archiveDao" ref="archiveDao" />
+   </bean>
+
+   <bean id="contactService" class="org.rifasproject.services.ContactServiceImpl" depends-on="simpleMailSender">
+       <property name="mailSender" ref="simpleMailSender" />
+   </bean>
+
+   <bean id="statsService" class="org.rifasproject.services.StatsServiceImpl" depends-on="searchKeywordDao">
+       <property name="searchKeywordDao" ref="searchKeywordDao" />
+       <property name="linkSetDao" ref="linkSetDao" />
+       <property name="linksDao" ref="linksDao" />
+       <property name="webPageDao" ref="webPageDao" />
+       <property name="tagsDao" ref="tagsDao" />
+       <property name="commentsDao" ref="commentsDao" />
+       <property name="archiveDao" ref="archiveDao" />
+   </bean>
+
+   <bean id="maintenanceService" class="org.rifasproject.services.MaintenanceServiceImpl" depends-on="linkSetDao, archiveDao, searchKeywordDao, linkSetService">
+       <property name="linkSetDao" ref="linkSetDao" />
+       <property name="archiveDao" ref="archiveDao" />
+       <property name="searchKeywordDao" ref="searchKeywordDao" />
+       <property name="webPageDao" ref="webPageDao" />
+       <property name="linkSetService" ref="linkSetService" />
+       <property name="commentsDao" ref="commentsDao" />
+       <property name="movieDao" ref="movieDao" />
+   </bean>
+
+   <bean id="archiveService" class="org.rifasproject.services.ArchiveServiceImpl" depends-on="archiveDao">
+       <property name="archiveDao" ref="archiveDao" />
+   </bean>
+
+
+   <bean id="abstractImdbService" class="org.rifasproject.services.AbstractImdbService" abstract="true">
+       <lookup-method name="createNewImdbApiInstance" bean="imdbApi" />
+       <lookup-method name="createNewOpensubtitlesApiInstance" bean="opensubtitlesApi" />
+   </bean>
+   <bean id="imdbService" class="org.rifasproject.services.ImdbServiceImpl" parent="abstractImdbService">
+       <property name="movieDao" ref="movieDao" />
+       <property name="moviePersonDao" ref="moviePersonDao" />
+       <property name="linkSetService" ref="linkSetService" />
+       <property name="linksDao" ref="linksDao" />
+   </bean>
+
+   <!-- crontab jobs -->
+   <import resource="crontab.xml" />
+
+   <!-- mails -->
+   <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="protocol" value="smtp" />
+      <property name="username" value="admin@rifasproject.org" />
+      <property name="password" value="wAS7r6iU" />
+      <property name="javaMailProperties">
+        <props>
+            <prop key="mail.smtp.quitwait">false</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.smtp.socketFactory.port">587</prop>
+            <prop key="mail.smtp.socketFactory.fallback">false</prop>
+            <prop key="mail.smtp.timeout">10000</prop>
+        </props>
+      </property>
+   </bean>
+   <bean id="simpleMailSender" class="org.rifasproject.util.mail.SimpleMailSender" depends-on="mailSender">
+       <property name="mailSender" ref="mailSender" />
+   </bean>
+
+   <!-- imdb api -->
+   <bean id="imdbApi" class="sk.mortality.util.imdb.Jmdb" scope="prototype">
+       <constructor-arg ref="imdbApiCriteria" />
+   </bean>
+   <bean id="imdbApiCriteria" class="sk.mortality.util.imdb.Jmdb$Criteria">
+       <constructor-arg>
+           <map>
+               <entry key="auto_parse" value="false" />
+               <entry key="timeout" value="1500" />
+           </map>
+       </constructor-arg>
+   </bean>
+</beans>

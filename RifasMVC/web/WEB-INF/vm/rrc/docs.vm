@@ -1,0 +1,138 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1>Documentation - Rifas Remote Checker</h1>
+        <strong>This documentation concerns only version 1.0b EXPERIMENTAL</strong>
+    </div>
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+        <h2 class="searchTipHeader">Introduction</h2>
+        <p>
+           <strong>Rifas Remote Checker</strong> later only <strong>RRC</strong> is a javascript library capable of beeing
+           applied on every html/xhtml webpage. RRC is a standalone library with <strong>flxhr</strong> dependancy
+           which is packed with RRC in download package. RRC is suitable for every blog/forum/webpage which hosts links to rapidshare/megaupload...
+           storage engines. RIFAS currently supports only <strong>rapidshare.com</strong> storage engine.
+           After implemented your visitor can check these links for validity and size
+           without leaving your page. Implementation is trivial, gane for visitors is huge. RRC only
+           support storage engines that RIFAS project generaly supports. Storage engine is <strong>detected
+           automatically</strong> by RRC.
+        </p>
+        <br />
+        <p>
+            While researching a best way to make RIFAS api availlable to wide public we came across
+            the idea to create a modal window API based on lighbox gone wild implementation. Lightbox
+            gone wild, however, while fantastic, was based on javascript framework called prototype,
+            which was a bit heavy dependancy for our purposes. So we created our own implementation
+            that is lightweight, has no dependancies on lightbox or prototype and is more flexible for
+            extending a web site’s interface. Howerer while developing RRC library we came across a big
+            progrem concerning cross-domain requesting. XMLHttpRequest in any form is not able to process
+            outgoing requests to another domains. To we took advantage of <strong><a href="http://flxhr.flensed.com/">flxhr</a></strong> library
+            that combines AJAX and Flash to make outgoing request. All request from RRC are beeing made via this library.
+        </p>
+        <br /><br />
+        <h2 class="searchTipHeader">See it in Action</h2>
+        <p class="centered">
+            <a href="$request.contextPath/rrc/demo"><img style="border: 1px solid gray; padding: 15px" src="$request.contextPath/images/demo_screen.png" alt="Demo" width="256" height="333" /></a>
+        </p>
+        <br />
+        <p>
+            <a href="$request.contextPath/rrc/demo">Our demo</a> illustrates a few of the possibilities available to a developer
+            using our RRC javascript library. Just click on the links to see how RRC can provide advanced reports,
+            and make the export from this reports. RRC makes it easy to extend a web application’s interface
+            without having to add clutter. RRC is <strong>crossbrower and tested</strong> on last versions of <strong>Firefox</strong>
+            and <strong>IE</strong>.
+        </p>
+        <br /><br />
+        <h2 class="searchTipHeader">Implementation</h2>
+        <p>
+            For those of you wanting to impress your page visitors, here’s the low down on getting the script working.
+            After a quick walkthrough, we’ll take a look at the JavaScript and CSS files that make it all tick.
+        </p>
+        <br />
+        <p>
+            <a href="$request.contextPath/downloads/#rrc">Download the Code</a>
+        </p>
+        <br />
+        <h3>Include the files</h3>
+        <br />
+        <p>
+            Upload the flXHR.js, rrc.js and rrc.css files into your
+            web directory and include them in the head of your html document like so:
+            <br /><br />
+            <i>(Copy entire flxhr/ directory into your scripts/ directory. flxhr/ directory
+            constains required dependancies for flXHR.js library.)</i>
+        </p>
+        <br />
+        <p class="searchTipCode">
+            <strong>
+            &lt;script src="scripts/flxhr/flXHR.js" type="text/javascript"&gt;&lt;/script&gt;<br />
+            &lt;link rel="stylesheet" href="css/rrc.css" type="text/css" /&gt;<br />
+            &lt;script src="scripts/rrc.js" type="text/javascript"&gt;&lt;/script&gt;
+            </strong>
+        </p>
+        <br />
+        <h3>Create some RRCs</h3>
+        <br />
+        <p>
+            Create an element with unique ID that contains storage engine links. Links can be in
+            any form, they don't have to be enclosed in &lt;a&gt;*&lt;/a&gt; element.
+        </p>
+        <br />
+        <p class="searchTipCode">
+            <strong>
+                &lt;div id="someRapidshareLinks"&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147039641/I.Robot.cd1.part2.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147039647/I.Robot.cd1.part3.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147039642/I.Robot.cd1.part4.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147039630/I.Robot.cd1.part5.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147039637/I.Robot.cd1.part6.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147039649/I.Robot.cd1.part7.rar&lt;/a&gt;<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;http://rapidshare.com/files/147036927/I.Robot.cd1.part8.rar&lt;/a&gt;;<br />
+                &lt;/div&gt;
+            </strong>
+        </p>
+        <br />
+        <h3>Activating RRCs</h3>
+        <br />
+        <p>
+            To call your RRC interface, just link to the ID of RRC element, set the class to rrcOn and rel to ID of RRC element.
+        </p>
+        <br />
+        <p class="searchTipCode">
+            <strong>
+                &lt;a href="#" class="rrcOn" rel="someRapidshareLinks"&gt;Check links&lt;/a&gt;
+            </strong>
+        </p>
+        <br />
+        <h3>How it works</h3>
+        <br />
+        <p>
+            In a nutshell, when the user clicks on a link with a class of rrcOn,
+            a transparent div is positioned on top of the webpage to present a visual cue
+            that the attention is now focused on our RRC modal window. After the overlay is set,
+            a div is positioned on top of the transparent overlay and loaded with information of RRC.
+            When the page first loads, our RRC inserts its markup right before the closing body tag.            
+        </p>
+        <br />
+        <h3>Layout</h3>
+        <br />
+        <p>
+            You can redesign RRC layout by modifying rrc.css stylesheet. The best solution
+            is to use Firefox Firebug extension to inspect what html code is beeing used to
+            display RRC and identify elements you want to redesign.
+        </p>
+        <br /><br />
+        <h3>Conclusion</h3>
+        <br />
+        <p>
+            We believe Rifas Remote Checker to be a great tool for presenting more
+            information about links to storage engines. Advanced reports are generated
+            in realtime.
+            <br /><br />
+            PS: In last version is it not possible to change RRC layout. We plan to implement
+            it in future versions.
+        </p>
+        <br /><br />
+       </div>
+    </div>
+</div>

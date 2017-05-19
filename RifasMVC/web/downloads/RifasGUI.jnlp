@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="http://rifasproject.org/downloads" href="RifasGUI.jnlp" spec="1.0+">
+    <information>
+        <title>RifasGUI 1.0b</title>
+        <vendor>QuidProQuo inc.</vendor>
+        <homepage href="http://rifasproject.org"/>
+        <description>RIFAS project desktop applciation</description>
+        <description kind="short">RifasGUI 1.0b</description>
+        <icon href="rifasGUI.gif"/> 
+        <icon kind="splash" href="rifas-splash.gif"/> 
+    <offline-allowed/>
+</information>
+<security>
+<all-permissions/>
+</security>
+    <resources>
+<j2se version="1.6+"/>
+<jar eager="true" href="RifasGUI.jar" main="true"/>
+
+
+<jar href="lib/appframework-1.0.3.jar"/>
+<jar href="lib/swing-worker-1.1.jar"/>
+<jar href="lib/commons-logging-1.1.jar"/>
+<jar href="lib/cglib-2.2.jar"/>
+<jar href="lib/spring-2.5.jar"/>
+<jar href="lib/log4j-1.2.15.jar"/>
+<jar href="lib/json.jar"/>
+<jar href="lib/RifasLib.jar"/>
+<jar href="lib/hibernate-search.jar"/>
+<jar href="lib/jms.jar"/>
+<jar href="lib/jsr250-api.jar"/>
+<jar href="lib/lucene-core.jar"/>
+<jar href="lib/solr-common.jar"/>
+<jar href="lib/solr-core.jar"/>
+<jar href="lib/hibernate-core.jar"/>
+<jar href="lib/lucene-snowball.jar"/>
+<jar href="lib/lucene-analyzers.jar"/>
+<jar href="lib/HTTPClient.jar"/>
+</resources>
+    <application-desc main-class="org.rifasproject.gui.RifasGUIApp">
+
+    </application-desc>
+</jnlp>

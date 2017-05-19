@@ -1,0 +1,30 @@
+#set($layout = "layouts/emptyLayout.vm")
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>$escape.html($pageTitle)</title>
+        <meta name="description" content="$escape.html($pageDescription)" />
+        <meta name="keywords" content="$escape.html($pageKeywords)" />
+        <meta name="author" content="QuidProQuo inc." />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Language" content="en" />        
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="X-Robots-Tag" content="noindex, nofollow" />
+        <link rel="shortcut icon" type="image/x-icon" href="$request.contextPath/images/favicon.ico" />
+        <style type="text/css" media="screen">
+            body { margin: 0;background:url('../images/mainbg.jpg') 0 0 repeat-x}
+            div {color: #DEDA03;font-weight:bold;text-align:center;height: 90px;vertical-align:middle}
+            div img {margin-top:25px}
+            div p {float:left;margin:0;margin-left: 100px}
+        </style>
+    </head>
+    <body>
+        <div>           
+            <p>
+                <img height="56" width="196" border="0" title="RIFAS Project" alt="RIFAS Project" src="$request.contextPath/images/logo.gif" />
+                <span>Please register to download $escape.html($linkSetName)</span>
+            </p>
+        </div>
+        <iframe src="http://rapidshare.com/premium.html?ref=85C1DFE777FB2CE0ADBF76071F20A4E1" scrolling="yes" width="100%" height="800" frameborder="0" />
+    </body>
+</html>

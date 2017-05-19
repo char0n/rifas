@@ -1,0 +1,80 @@
+#lightbox{
+	display:none;
+	position: absolute;
+	top:50%;
+	left:50%;
+	z-index:9999;
+	/*width:500px;
+	height:400px;*/
+	margin:-220px 0 0 -250px;
+	border:0;
+	background:#FDFCE9;
+	text-align:left;
+}
+#lightbox[id]{
+	position:fixed;
+}
+
+#overlay{
+	display:none;
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:5000;
+	background-color:#000;
+	-moz-opacity: 0.8;
+	opacity:.80;
+	filter: alpha(opacity=80);
+}
+#overlay[id]{
+	position:fixed;
+}
+
+#lightbox.done #lbLoadMessage{
+	display:none;
+}
+#lightbox.done #lbContent{
+	display:block;
+}
+#lightbox.loading #lbContent{
+	display:none;
+}
+#lightbox.loading #lbLoadMessage{
+	display:block;
+}
+
+#lightbox.done img{
+	width:100%;
+	height:100%;
+}
+
+#rrcBox, #rrcClose {width: 200px; height:86px;background-color:#F4F4F4;font-family: Verdana, sans-serif, Arial;font-weight: normal;font-size: .7em;}
+#rrcBox #rrcProgressIcon {width:36px; height:36px; padding-top: 8px; padding-left: 5px; float: left}
+#rrcBox #rrcProgressIcon img {vertical-align:middle}
+#rrcBox #rrcProgressText {font-weight:bold; padding-top: 18px}
+#rrcProgressSumary a {text-decoration:none;font-weight:bold;font-style:italic;color:#9F9C31}
+#rrcClose {margin:0;text-align:center;width:auto;height:auto;padding-bottom: 2px;padding-top: 3px}
+#rrcClose a {text-decoration:none;color: #000;font-weight:bold}
+#rrcBox br {clear:both}
+
+#rrcLinkCheckedBox {width: 720px; height:250px;background-color:#E6E6E6;font-family: Verdana, sans-serif, Arial;font-weight: normal;font-size: .7em;overflow:auto}
+#rrcLinkCheckedBox table {width: 95%; margin-left: 20px; margin-top: 10px;margin-bottom:10px}
+#rrcLinkCheckedBox table tr th {background-color:#EAEAEA;padding-left: 5px}
+#rrcLinkCheckedBox table tr td {padding-top: 3px;background-color:#F7F7F7}
+#rrcLinkCheckedBox table div.directDownload a {text-decoration:none}
+#rrcLinkCheckedBox table div.directDownload span.active {color: #009900;}
+#rrcLinkCheckedBox table div.directDownload span.deleted {color: #FF7F7F;}
+#rrcLinkCheckedBox table div.directDownload span.inactive {color: #9E9E9E;}
+
+#rrcLinkReport {width:96%;background-color:#A9B8C2;border:1px solid #006699;margin:auto}
+
+#rrcSummary, #rrcProgressSumary {text-align:center;font-weight:bold}
+#rrcSummary a {text-decoration:none;font-style:italic;color:#0A58A5;}
+#rrcSummary div a {font-weight:normal}
+#rrcSummary div {text-align:center;margin-bottom: 2px}
+
+
+
+#rrcLinkCheckedBox textarea { width:650px; height: 150px;margin-left:16px;margin-top:15px;margin-bottom:15px}

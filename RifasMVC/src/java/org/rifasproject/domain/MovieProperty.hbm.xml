@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.MovieProperty" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <cache region="org.rifasproject.domain.MovieProperty" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">movie_property_id_seq</param>
+      </generator>
+    </id>
+    <property column="type" name="type" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.MoviePropertyType</param>
+      </type>
+    </property>
+    <property column="value" length="255" name="value" not-null="true" type="string"/>
+    <many-to-one class="org.rifasproject.domain.Movie" column="movieId" name="movie" not-null="true"/>
+  </class>
+</hibernate-mapping>

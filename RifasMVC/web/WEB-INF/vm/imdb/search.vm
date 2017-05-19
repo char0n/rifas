@@ -1,0 +1,90 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <br />
+        <form name="searchImdbBar" action="$request.contextPath/imdb/search/" method="post">
+            <table id="searchTable">
+                <tr>
+                    <td style="padding-left: 0">
+                        <div style="width: 70px;height: 50px;float:left;margin-top: 13px;margin-right: 100px">
+                            <a href="$request.contextPath/imdb/search/"><img src="$request.contextPath/images/imdb_logo1.gif" width="62" height="38" alt="Imdb RIFAS search" border="0" /></a>
+                        </div>
+                        <br />
+                        #if ($null.isNull($title))
+                            <input type="text" name="title" value="" />
+                        #else
+                            <input type="text" name="title" value="$escape.html($title)" />
+                        #end                        
+                        <input type="submit" value="Search" />
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <h1 class="centered" style="font-size: 18px">Imdb Rifas Search#if (!$null.isNull($title)) - $escape.html($title)#end</h1>
+        <p>
+            Imdb search is a unique concept in searching for movies on internet.
+            Every released movie has an <a href="http://www.imdb.com/" rel="nofollow">Imdb</a> record. We search this
+            records and associate LinkSets with Imdb. Once the LinkSet is associated with Imdb,
+            we can further associate him with possible <a href="http://www.opensubtitles.org/" rel="nofollow">subtitles</a>. You can find your movie and subtitles
+            by one RIFAS click.
+        </p>
+    </div>
+    #if ($null.isNotNull($matches))
+    <div id="bodymainmiddlePan">
+       <div id="bodymiddlePan">
+            #if ($matches.size() == 0)
+                <p class="centered">
+                    <strong >No matches found</strong>
+                </p>
+                <br />
+                <br />
+            #else
+                #set ($iteration = 1)
+                #foreach ($titleId in $matches.keySet())
+                    #if ($iteration == 1)
+                      <div class="imdbTitle">
+                        <div class="imdbCover">
+                            <a href="$request.contextPath/imdb/title/$firstMatch.id/$escape.url($firstMatch.title)" title="$escape.html($firstMatch.title)"><img src="$request.contextPath/imdb/cover/$firstMatch.id" alt="$escape.html($firstMatch.title)" border="0" onerror="this.src='$request.contextPath/images/title_addposter.jpg'" /></a>
+                        </div>
+                        #set($tmpTitle = $firstMatch.title)
+                        #if ($tmpTitle.lenght() > 45) #set($tmpTitle = $tmpTitle.substring(0, 43)+"...") #end
+                        <h2><a href="$request.contextPath/imdb/title/$firstMatch.id/$escape.url($firstMatch.title)" title="$escape.html($firstMatch.title)">$escape.html($tmpTitle) ($escape.html($firstMatch.year))</a></h2>
+                        #if (!$null.isNull($firstMatch.plot))
+                          <br />
+                          $escape.html($firstMatch.plot)
+                          <br />
+                        #end
+                        #if (!$null.isNull($firstMatch.rating))
+                            <br />
+                            <strong>Rating</strong>&nbsp;&nbsp;&nbsp;&nbsp; <span class="property">$firstMatch.rating/10#if(!$null.isNull($firstMatch.votes))</span> <b>|</b> <span class="property">$firstMatch.votes votes#end</span>
+                        #end
+                        #if ($firstMatch.getGenres().size() > 0)
+                          <br />
+                          <strong>Genre</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                          #set($iteration = 0)
+                          #foreach ($genre in $firstMatch.genres)
+                            #set($iteration = $iteration + 1)
+                            <span class="property">$escape.html($genre.value)</span>#if ($iteration < $firstMatch.genres.size()) <b>|</b> #end
+                          #end
+                        #end
+                        #if (!$null.isNull($firstMatch.runtime))
+                           <br />
+                           <strong>Runtime</strong> <span class="property">$escape.html($firstMatch.runtime)</span>
+                        #end
+                      </div>
+                      <br clear="all" /><br />
+                      <h3>Related Titles</h3>
+                      <br />
+                    #else
+                     <a href="$request.contextPath/imdb/title/$titleId/$escape.url($matches.get($titleId))" title="$escape.html($matches.get($titleId))"><img src="$request.contextPath/images/imdb_small.gif" alt="$escape.html($matches.get($titleId))" width="16" height="16" border="0" style="vertical-align:middle" /></a>
+                     <h4 style="display:inline"><a href="$request.contextPath/imdb/title/$titleId/$escape.url($matches.get($titleId))" title="$escape.html($matches.get($titleId))">$escape.html($matches.get($titleId))</a></h4><br />
+                    #end
+                    #set ($iteration = $iteration + 1)
+                #end
+            #end
+                <br /><br />
+       </div>
+    </div>
+    #end
+</div>

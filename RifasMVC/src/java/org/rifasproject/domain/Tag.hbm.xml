@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.Tag" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <cache region="org.rifasproject.domain.Tag" usage="read-only"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">tag_id_seq</param>
+      </generator>
+    </id>
+    <property column="binder" length="15" name="binder" not-null="true" type="string" unique="true"/>
+    <property column="created" name="created" not-null="true" type="date"/>
+    <set cascade="none" inverse="true" lazy="true" name="linkSets" table="LinkSetTag">
+      <key column="tagId"/>
+      <many-to-many class="org.rifasproject.domain.LinkSet" column="linkSetId"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+       <bean id="searchEngine" class="org.rifasproject.services.GoogleSearchEngine">
+           <property name="storage" value="RAPIDSHARE" />
+           <property name="source" value="http://ajax.googleapis.com/ajax/services/search/web?v=1.0" />
+           <property name="name" value="Google Search API" />
+           <property name="description" value="Google Search API based on REST" />
+           <property name="type" value="REST" />
+       </bean>
+       <bean id="downloader" class="org.rifasproject.services.DefaultUrlDownloader">
+           <property name="urlTimeout" value="2000" />
+       </bean>
+       <bean id="checker" class="org.rifasproject.services.RapidshareLinkChecker" />
+       <bean id="parser" class="org.rifasproject.services.RapidshareUrlParser" depends-on="linkComparator">
+           <property name="comparator" ref="linkComparator" />
+           <property name="linkRegex" value="RAPIDSHARE_LINK" />
+           <property name="linkDescRegex" value="RAPIDSHARE_LINK_DESC" />
+       </bean>
+       <bean id="linkComparator" class="org.rifasproject.util.LinkComparator">
+           <constructor-arg index="0">
+               <value>RAPIDSHARE_LINK</value>
+           </constructor-arg>
+       </bean>
+       <bean id="rapider" class="org.rifasproject.services.Rapider">
+           <property name="engine" ref="searchEngine" />
+           <property name="downloader" ref="downloader" />
+           <property name="parser" ref="parser" />
+       </bean>
+</beans>

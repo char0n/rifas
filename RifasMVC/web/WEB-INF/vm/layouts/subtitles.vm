@@ -1,0 +1,63 @@
+  <div id="subtitles">
+      <h2>Subtitles</h2>
+      #if (!$null.isNull($subtitles) && $subtitles.size() > 0)
+      <table class="linkSetsList">
+        <tr>
+            <td class="header">&nbsp;</td>
+            <td class="header">Name</td>
+            <td class="header">Language</td>
+            <td class="header">Sum CD</td>
+            <td class="header">#CD</td>
+            <td class="header">Uploaded</td>
+            <td class="header"><img src="$request.contextPath/images/rating_sub.gif" width="16" height="16" alt="Subtitle Rating" /></td>
+            <td class="header">Size</td>
+        </tr>
+        #set($counter = 0)
+        #set($subtitlesCount = $subtitles.size())
+        #set($maxSubsToShow  = 10)
+        #foreach ($subtitle in $subtitles)
+        #set($counter = $counter + 1)
+        #if ($counter <= $maxSubsToShow)
+        <tr>
+            <td><a href="$subtitle.downloadLink" title="Download $escape.html($subtitle.name)" rel="nofollow"><img src="$request.contextPath/images/down-link.png" border="0" width="16" height="16" alt="Download $escape.html($subtitle.name)" /></a></td>
+            #set($subtitleName = $subtitle.name)
+            #if ($subtitleName.length() > 40)
+                #set($subtitleName = $subtitleName.substring(0, 40)+"...")
+            #end
+            <td><a href="$subtitle.detailsLink" rel="nofollow" target="_blank" title="$escape.html($subtitle.name)">$escape.html($subtitleName)</a></td>
+            <td class="centered"><img src="$request.contextPath/images/flags/2chars/${subtitle.language.getLanguage()}.gif" width="18" height="12" alt="$subtitle.language.getDisplayLanguage()" /></td>
+            <td>$escape.html($subtitle.sumCD)</td>
+            <td>$escape.html($subtitle.actualCD)</td>
+            <td>$date.format("yyyy-MM-dd", $subtitle.uploaded)</td>
+            <td>$escape.html($subtitle.rating)</td>
+            <td class="centered">$linkSizeUtil.formatSize($subtitle.size)</td>
+        </tr>
+        #end
+        #if ($counter == $subtitlesCount)
+        <tr>
+            <td colspan="8" style="text-align: right"><a href="http://www.opensubtitles.org/en/search2/sublanguageid-all/moviename-$escape.url($movieTitle)" title="Search more subtitles for $movieTitle" rel="nofollow">...more</a></td>
+        </tr>
+        #end
+        #end
+      </table>
+      #end
+      #if ($subtitlesLazyLoad == true)
+      <div id="subtitlesLoading">
+          <div>
+            <img src="$request.contextPath/images/scan_progress.gif" width="36" height="36" alt="Scanning Opensubtitles.org for subtitles" />
+          </div>
+          <strong>Scanning <a href="http://www.opensubtitles.org/">Opensubtitles.org</a> for subtitles</strong>
+      </div>
+      #end
+      #if (!$null.isNull($errorLazyLoadSubtitles))
+      <div id="subtitlesLoading">
+          <div>
+            <img src="$request.contextPath/images/warn.jpg" width="48" height="48" alt="Scanning of Opensubtitles.org failed" />
+          </div>
+          <strong>Scanning of <a href="http://www.opensubtitles.org/">Opensubtitles.org</a> failed</strong>
+      </div>
+      #end
+  </div>
+  <script type="text/javascript">
+    lazyLoadSubtitlesByImdbId($imdbId);
+  </script>

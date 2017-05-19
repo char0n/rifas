@@ -1,0 +1,20 @@
+#set($layout = "layouts/xmlLayout.vm")
+<div id="storageDefsModalWindow">
+    <div style="text-align: right">
+        <a href="#" class="lbAction" rel="deactivate"><img style="width:16px;height:16px" src="$request.contextPath/images/close_icon.gif" alt="" width="16" height="16" border="0" /></a>
+    </div>
+    <div class="centered">
+        <h3>Internet Storage</h3>
+    </div>
+    <form name="modalStorageDefs">
+        <div style="margin-left: 50px">
+            <input type="radio" name="filter" value="rapidshare" /> Rapidshare.com<br />
+            <input disabled="disabled" type="radio" name="filter" value="megaupload" /> Megaupload.com<br />
+        </div>
+        <br />
+        <p class="centered"><input type="button" value="OK" onclick="selectStorageDef();" /></p>
+    </form>
+</div>
+<script type="text/javascript" language="javascript">
+    selectActiveStorageInModalWindow();
+</script>

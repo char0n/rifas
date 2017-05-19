@@ -1,0 +1,135 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        <h1 onmouseover="TagToTip('toolTip$archivedLinkSet.id', SHADOW, true, OPACITY, 100, BGCOLOR, '#F2F2F2', BORDERCOLOR, '#808080');" onmouseout="UnTip();">$escape.html($archivedLinkSet.name)</h1>
+    </div>
+    <div id="bodymainmiddlePan">
+        <div id="bodymiddlePan">
+            <h3>
+                <img src="$request.contextPath/images/warn.jpg" style="vertical-align:middle" width="48" height="48" alt="Warning" />
+                This LinkSet is not active any more. It is only stored for archiving purposes !
+            </h3>
+            #if ($archivedLinkSet.name)
+            <table id="affiliateSearch" style="margin-top: 0">
+                <tr>
+                    <td rowspan="3">
+                        <a href="$request.contextPath/download/$escape.url($archivedLinkSet.name)" title="Download ${escape.html($archivedLinkSet.name)}"><img src="$request.contextPath/images/download-icon.png" alt="Download ${escape.html($archivedLinkSet.name)}" border="0" /></a>
+                    </td>
+                    <td>
+                        <a href="$request.contextPath/download/$escape.url($archivedLinkSet.name)$escape.url(".full.rar")" title="Download ${escape.html($archivedLinkSet.name)}.full.rar">${escape.html($archivedLinkSet.name)}.full.rar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="$request.contextPath/download/$escape.url($archivedLinkSet.name)$escape.url(" [FULLVERSION]")" title="Download ${escape.html($archivedLinkSet.name)} [FULLVERSION]">${escape.html($archivedLinkSet.name)} [FULLVERSION]</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="$request.contextPath/download/$escape.url("[HIGHSPEED] ")$escape.url($archivedLinkSet.name)" title="Download [HIGHSPEED] ${escape.html($archivedLinkSet.name)}">[HIGHSPEED] ${escape.html($archivedLinkSet.name)}</a>
+                    </td>
+                </tr>
+            </table>
+            #else
+            <table id="affiliateSearch">
+                <tr>
+                    <td rowspan="2">
+                        <a href="$request.contextPath/download/any+files" title="Download LinkSet"><img src="$request.contextPath/images/download-icon.png" alt="Download LinkSet" border="0" /></a>
+                    </td>
+                    <td>
+                        <a href="$request.contextPath/download/any+files">Download LinkSet</a>
+                    </td>
+                </tr>
+            </table>
+            #end
+            <div class="linkSet">
+                #if ($archivedlinkSet.description)<p class="desc">$escape.html($archivedlinkSet.description)</p>#else<br />#end
+                #set ($links = $archivedLinkSet.links.split("\n"))
+                <h3 class="centered">LinkSet archived on $date.format($archivedLinkSet.archived)</h3>
+                <div class="links">
+                    #set ($maxLength  = 110)
+                    #set ($linksCount = 0)
+                    #foreach ($link in $links)
+                       #set ($linkUrl = $link)
+                       #if ($linkUrl.length() > $maxLength)
+                            #set ($point1   = ($linkUrl.length() / 2) - (($linkUrl.length() - $maxLength) /2))
+                            #set ($point2 =  $point1 + ($linkUrl.length() - $maxLength))
+                            #set ($linkUrl   = $linkUrl.substring(0, $point1)+"..."+$linkUrl.substring($point2, $linkUrl.length()))
+                       #end
+                       <a title="Direct download" href="$linkObfuscator.encodeNCR($linkUrl)" rel="nofollow" target="_blank"><img src="$request.contextPath/images/down-link.png" alt="Direct Download" width="16" height="16" border="0" /></a>
+                       $linkObfuscator.encodeNCR($linkUrl)<br />
+                       #set ($linksCount = $linksCount + 1)
+                    #end
+                </div>
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td>
+                                #set($tmp1size = $linkSizeUtil.formatSize($size))
+                                <span>Storage</span> ($archivedLinkSet.storage.name()) |
+                                <span>Links</span> ($linksCount) |
+                                <span>Source</span> ($archivedLinkSet.source.name())
+                            </td>
+                            <td class="right">
+                                <span>Status</span> (archived)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                 <span>Created</span> ($date.format($archivedLinkSet.created)) 
+                            </td>
+                            <td class="right">
+                                <span>UUID</span> ($archivedLinkSet.uuid)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <h2>Link Export</h2>
+            <br />
+            <form action="" method="get">
+                <textarea readonly="readonly" cols="90" rows="10">#foreach($link in $links)$linkObfuscator.encodeNCR($link)&#10;#end</textarea>
+            </form>
+            <br />
+            #parse("layouts/relatedLinkSets.vm")
+            <br />
+            #parse("comments/comments.vm")
+            <br />
+        </div>
+    </div>
+</div>
+<div id="toolTip$archivedLinkSet.id" style="display: none">
+    <table style="min-width:500px" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+            <td rowspan="6" style="width: 165px"><img src="$request.contextPath/images/linkset_types/${archivedLinkSet.type.name()}.png" alt="$linkSetTypeUtil.searchTextByLinkSetType($archivedLinkSet.type)" width="128" height="128" /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <strong>
+                #if ($archivedLinkSet.name)
+                 $escape.html($archivedLinkSet.name)
+                #else
+                 $archivedLinkSet.uuid
+                #end
+                </strong>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 100px">LinkSet type:</td>
+            <td>$linkSetTypeUtil.searchTextByLinkSetType($archivedLinkSet.type)</td>
+        </tr>
+        <tr>
+            <td>Storage:</td>
+            <td>$archivedLinkSet.storage.name()</td>
+        </tr>
+        <tr>
+            <td>Source:</td>
+            <td>$archivedLinkSet.source.name()</td>
+        </tr>
+        <tr>
+            <td>Links:</td>
+            <td>$linksCount</td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/tooltip/wz_tooltip.js"></script>
+<script type="text/javascript" language="Javascript" src="$request.contextPath/javascript/comments.js"></script>

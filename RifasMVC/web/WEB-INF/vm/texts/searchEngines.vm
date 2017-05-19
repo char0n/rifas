@@ -1,0 +1,20 @@
+#set($layout = "layouts/xmlLayout.vm")
+<div id="searchEnginesDefsModalWindow">
+    <div style="text-align: right">
+        <a href="#" class="lbAction" rel="deactivate"><img style="width:16px;height:16px" src="$request.contextPath/images/close_icon.gif" alt="" width="16" height="16" border="0" /></a>
+    </div>
+    <div class="centered">
+        <h3>DIS Search Engine</h3>
+    </div>
+    <form name="modalSearchEnginesDefs" action="$request.contextPath/set-search-engine" method="post">
+        <div style="margin-left: 50px">
+            <input type="radio" name="searchEngine" value="google" /> Google<br />
+            <input type="radio" name="searchEngine" value="yahoo" /> Yahoo<br />
+        </div>
+        <br />
+        <p class="centered"><input type="submit" value="OK" /></p>
+    </form>
+</div>
+<script type="text/javascript" language="javascript">
+    selectActiveSearchEngineInModalWindow();
+</script>

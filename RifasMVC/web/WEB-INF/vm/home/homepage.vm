@@ -1,0 +1,216 @@
+<div id="bodytopmainPan">
+    <div id="bodytopPan">
+        #parse("layouts/searchBar.vm")        
+        <h1 class="centered" style="font-size: 18px">Rapid Internet File Allocation Service</h1>
+        <!-- You will NOT be able to see the ad on your site! This unit is hidden on your page, and will only display to your search engine traffic (from US and CA). To preview, paste the code up on your site, then add #chitikatest=mortgage to the end of your URL in your browser's address bar.  Example:  www.yourwebsite.com#chitikatest=mortgage. This will show you what the ad would look like to a user who is interested in "mortgages." -->
+        <script type="text/javascript"><!--
+        ch_client = "quidproquo";
+        ch_type = "mpu";
+        ch_width = 728;
+        ch_height = 90;
+        ch_color_bg = "F4F4F4";
+        ch_color_border = "F4F4F4";
+        ch_color_title = "929017";
+        ch_color_site_link = "929017";
+        ch_color_text = "707070";
+        ch_non_contextual = 4;
+        ch_vertical ="premium";
+        ch_font_title = "Arial";
+        ch_font_text = "Arial";
+        ch_sid = "Chitika Premium";
+        var ch_queries = new Array( );
+        var ch_selected=Math.floor((Math.random()*ch_queries.length));
+        if ( ch_selected < ch_queries.length ) {
+        ch_query = ch_queries[ch_selected];
+        }
+        //--></script>
+        <script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
+        </script>
+        <p>
+            <strong>RIFAS</strong> stands for <strong>R</strong>apid <strong>I</strong>nternet <strong>F</strong>ile
+            <strong>A</strong>llocation<strong> S</strong>ervice.
+            Rifas is specialized search engine and library capable of search for
+            files (audio, video, games etc.) that are present on world wide web (internet). Currenty supported
+            storage is <a href="http://rapidshare.com">http://rapidshare.com</a>. We are preparing support for
+            every bigger internet storage engine. A Part of RIFAS project is desktop application capable of searching
+            for your files without using web browser.
+        </p>
+        <p class="more"><a href="$request.contextPath/about/">more</a></p>
+    </div>
+    <div id="bodymainmiddlePan">
+        <div id="bodymiddlePan">
+            <div style="width: 700px;margin-left: 40px;margin-top: -29px;">
+                <iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=F4F4F4&amp;fc1=0076E1&amp;lc1=6E6C00&amp;t=rapiintefilea-20&amp;o=1&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;asins=B002PMV9FG" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+                <iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=F4F4F4&amp;fc1=0076E1&amp;lc1=6E6C00&amp;t=rapiintefilea-20&amp;o=1&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;asins=B002HWRYJE" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+                <iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=F4F4F4&amp;fc1=0076E1&amp;lc1=6E6C00&amp;t=rapiintefilea-20&amp;o=1&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;asins=B002T9H2L0" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+                <iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=F4F4F4&amp;fc1=0076E1&amp;lc1=6E6C00&amp;t=rapiintefilea-20&amp;o=1&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;asins=B000087RFB" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+                <iframe src="http://rcm.amazon.com/e/cm?lt1=_blank&amp;bc1=000000&amp;IS2=1&amp;bg1=F4F4F4&amp;fc1=0076E1&amp;lc1=6E6C00&amp;t=rapiintefilea-20&amp;o=1&amp;p=8&amp;l=as1&amp;m=amazon&amp;f=ifr&amp;asins=B002SJIO5E" style="width:120px;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+            </div>
+            <br />
+            <div class="searchDetails" id="lastestImdbTitles">
+                <div class="header">Latest imdb titles</div>
+                <br />
+                #foreach ($firstMatch in $latestImdbTitles)
+                  #set($counter = $counter + 1)
+                  <div class="imdbTitle" style="width: 90%;margin:auto">
+                    <div class="imdbCover">
+                        <a href="$request.contextPath/imdb/title/$firstMatch.id/$escape.url($firstMatch.title)" title="$escape.html($firstMatch.title)"><img src="$request.contextPath/imdb/cover/$firstMatch.id" alt="$escape.html($firstMatch.title)" border="0" onerror="this.src='$request.contextPath/images/title_addposter.jpg'" /></a>
+                    </div>
+                    #set($tmpTitle = $firstMatch.title)
+                    #if ($tmpTitle.lenght() > 45) #set($tmpTitle = $tmpTitle.substring(0, 43)+"...") #end
+                    <h2><a href="$request.contextPath/imdb/title/$firstMatch.id/$escape.url($firstMatch.title)" title="$escape.html($firstMatch.title)">$escape.html($tmpTitle) ($escape.html($firstMatch.year))</a></h2>
+                    #if (!$null.isNull($firstMatch.plot))
+                      <br />
+                      $escape.html($firstMatch.plot)
+                      <br />
+                    #end
+                    #if (!$null.isNull($firstMatch.rating))
+                        <br />
+                        <strong>Rating</strong>&nbsp;&nbsp;&nbsp;&nbsp; <span class="property">$firstMatch.rating/10#if(!$null.isNull($firstMatch.votes))</span> <b>|</b> <span class="property">$firstMatch.votes votes#end</span>
+                    #end
+                    #if ($firstMatch.getGenres().size() > 0)
+                      <br />
+                      <strong>Genre</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                      #set($iteration = 0)
+                      #foreach ($genre in $firstMatch.genres)
+                        #set($iteration = $iteration + 1)
+                        <span class="property">$escape.html($genre.value)</span>#if ($iteration < $firstMatch.genres.size()) <b>|</b> #end
+                      #end
+                    #end
+                    #if (!$null.isNull($firstMatch.runtime))
+                       <br />
+                       <strong>Runtime</strong> <span class="property">$escape.html($firstMatch.runtime)</span>
+                    #end
+                  </div>
+                  <br clear="all" />
+                #end
+               <div class="centered">
+                <!-- You will NOT be able to see the ad on your site! This unit is hidden on your page, and will only display to your search engine traffic (from US and CA). To preview, paste the code up on your site, then add #chitikatest=mortgage to the end of your URL in your browser's address bar.  Example:  www.yourwebsite.com#chitikatest=mortgage. This will show you what the ad would look like to a user who is interested in "mortgages." -->
+                <script type="text/javascript"><!--
+                ch_client = "quidproquo";
+                ch_type = "mpu";
+                ch_width = 550;
+                ch_height = 90;
+                ch_color_bg = "FFFFFF";
+                ch_color_border = "FFFFFF";
+                ch_color_title = "929017";
+                ch_color_site_link = "929017";
+                ch_color_text = "707070";
+                ch_non_contextual = 4;
+                ch_vertical ="premium";
+                ch_font_title = "Arial";
+                ch_font_text = "Arial";
+                ch_sid = "Chitika Premium";
+                var ch_queries = new Array( );
+                var ch_selected=Math.floor((Math.random()*ch_queries.length));
+                if ( ch_selected < ch_queries.length ) {
+                ch_query = ch_queries[ch_selected];
+                }
+                //--></script>
+                <script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
+                </script>
+               </div>
+            </div>
+            <br clear="all" />
+            <br />
+            <div class="searchDetails">
+            <div id="searchCloud">
+                <div class="header">Search Cloud</div>
+                <p>
+                    #foreach ($item in $searchCloud)
+                        <a href="$request.contextPath/linksets/search/$escape.url($item.keyword)/in/all/storage/rapidshare/filter/all">$escape.html($item.keyword)</a><sub>$item.searchCount</sub>#if ($velocityCount < $searchCloud.size()), #end
+                    #end
+                </p>
+            </div>
+            <div id="latestSearches">
+                <div class="header">Latest Searches</div>
+                <p>
+                    #foreach ($item in $latestSearches)
+                        <a href="$request.contextPath/linksets/search/$escape.url($item.keyword)/in/all/storage/rapidshare/filter/all">$escape.html($item.keyword)</a><sub>$item.searchCount</sub>#if ($velocityCount < $searchCloud.size()), #end
+                    #end
+                 </p>
+            </div>
+            <br clear="all" /><br />
+            </div>
+            <div class="searchDetails">
+                <div id="libraryStatistics">
+                    <div class="header">Library Statistics</div>
+                    <table class="gridData" cellpadding="0" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th colspan="4">Statistics</th>
+                            </tr>
+                        </thead>
+                        <tr class="first">
+                            <td width="40%">LinkSets</td>
+                            <td width="10%">$libraryStats.getProperty("linkSets")</td>
+                            <td width="40%">Checked LinkSets</td>
+                            <td width="10%">$libraryStats.getProperty("checkedLinkSets")</td>
+                        </tr>
+                        <tr class="second">
+                            <td>Links</td>
+                            <td>$libraryStats.getProperty("links")</td>
+                            <td>Unchecked LinkSets</td>
+                            <td>$libraryStats.getProperty("uncheckedLinkSets")</td>
+                        </tr>
+                        <tr class="first">
+                            <td>WebPages</td>
+                            <td>$libraryStats.getProperty("webPages")</td>
+                            <td>Deleted LinkSets</td>
+                            <td>$libraryStats.getProperty("deletedLinkSets")</td>
+                        </tr>
+                        <tr class="second">
+                            <td>Tags</td>
+                            <td>$libraryStats.getProperty("tags")</td>
+                            <td>Active LinkSets</td>
+                            <td>$libraryStats.getProperty("activeLinkSets")</td>
+                        </tr>
+                        <tr class="first">
+                            <td>Comments</td>
+                            <td>$libraryStats.getProperty("comments")</td>
+                            <td>Archived LinkSets</td>
+                            <td>$libraryStats.getProperty("archivedLinkSets")</td>
+                        </tr>
+                        <tr class="second">
+                            <td colspan="4" class="centered">$libraryStats.getProperty("yesterdayLinkSets") LinkSets added yesterday</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="searchDetails">
+                <div id="latestLinkSetsComments">
+                    <div class="header">Latest LinkSets Comments</div>
+                    <table class="gridData" cellpadding="0" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th width="38%">LinkSet</th>
+                                <th>Author</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        #set($first = true)
+                        #set($maxLinkSetLen = 20)
+                        #foreach ($c in $latestComments)
+                         #set($linkSetName = $commentsLinkSets.get($c.id).name)
+                         #set($linkSetUUID = $commentsLinkSets.get($c.id).uuid)
+                         #if ($linkSetName.length() > $maxLinkSetLen)
+                           #set($linkSetName = $linkSetName.substring(0, $maxLinkSetLen)+"...")
+                         #end
+                        <tr#if($first == true) class="first"#set($first = false)#else class="second"#set($first = true)#end>
+                            <td><a href="#" onclick="window.location.href='$request.contextPath/linksets/show/$linkSetUUID/comments';return false;" title="$escape.html($commentsLinkSets.get($c.id).name)">$escape.html($linkSetName)</a></td>
+                            <td>$escape.html($c.author)</td>
+                            <td>$date.format($c.created)</td>
+                        </tr>
+                        #end
+                    </table>
+                </div>
+            </div>
+            <br clear="all" /><br />
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript">
+    Event.observe(window, "load", focusKeywordInput, false);
+</script>
+<script language="Javascript" type="text/javascript" src="$request.contextPath/javascript/flxhr/flXHR.js"></script>
+<script type="text/javascript" src="$request.contextPath/javascript/rrc.js"></script>

@@ -1,0 +1,44 @@
+<h2>Comments</h2>
+<div id="addCommentBox">
+    <a id="addCommentLink" href="$request.contextPath/comments/get/commentform/for/$itemId/$owner" onclick="showAddCommentModalWindow(); return false;" rel="nofollow">Add comment</a>
+    <img src="$request.contextPath/images/add-icon.gif" onclick="showAddCommentModalWindow(); return false;" width="20" height="20" alt="Add Comment" />
+</div>
+<ul id="commentsListing">
+#set ($i = 1)
+#foreach ($comment in $comments)
+    <li>
+        <a name="comment$i"></a>
+        <div class="head">
+            <img src="$request.contextPath/images/anonymous.png" alt="$escape.html($comment.author)" width="16" height="16" />
+            #if ($comment.web != '')
+              [$i] <a href="$comment.web"><strong>$escape.html($comment.author)</strong></a><br />
+            #else
+              [$i] <strong>$escape.html($comment.author)</strong><br />
+            #end
+            $date.format($comment.created)
+        </div>
+        <div class="text">$escape.html($comment.message)</div>
+        <div class="reply">
+            <a rel="nofollow" id="addReplyLink$comment.id" href="$request.contextPath/comments/get/replyform/for/$itemId/$owner/for/comment/$comment.id" onclick="showReplyCommentModalWindow($comment.id); return false;">Reply</a>
+            <br />
+            #if ($commentsReplies.containsKey($comment))
+             #foreach ($replyRef in $commentsReplies.get($comment))
+              <a href="#comment$replyRef">[$replyRef]</a>
+             #end
+            #end
+        </div>
+        <div style="clear: left;text-align:center">
+            #if ($null.isNotNull($comment.parent))
+            <img src="$request.contextPath/images/toggle-closed.gif" widht="5" height="10" alt="Reply of [$commentsRefs.get($comment.parent)]" />
+            <a href="#comment$i">Reply of [$commentsRefs.get($comment.parent)]</a>
+            #end
+        </div>
+    </li>
+    #set($i = $i + 1)
+#end
+#if ($comments.size() == 0)
+    <li style="text-align: center">
+        <strong>No comments</strong>
+    </li>
+#end
+</ul>

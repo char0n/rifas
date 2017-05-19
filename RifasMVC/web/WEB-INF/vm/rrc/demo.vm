@@ -1,0 +1,25 @@
+#set($layout = "layouts/rrcLayout.vm")
+<h1>Some Rapidshare.com links</h1>
+<div id="linkSet">
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147039641/I.Robot.cd1.part2.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147039647/I.Robot.cd1.part3.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147039642/I.Robot.cd1.part4.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147039630/I.Robot.cd1.part5.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147039637/I.Robot.cd1.part6.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147039649/I.Robot.cd1.part7.rar</a><br />
+    <a href="http://rapidshare.com/files/147035320/I.Robot.cd1.part1.rar">http://rapidshare.com/files/147036927/I.Robot.cd1.part8.rar</a><br />
+</div>
+<br /><br />
+<div>
+    <a href="#" class="rrcOn" rel="linkSet">Click here to check the links in linkset</a>
+</div>
+
+<h2>Paste Rapidshare.com links into textarea</h2>
+<div id="linkSetList">
+    <textarea name="export" cols="40" rows="10" onchange="document.getElementById('buffer').innerHTML = this.value"></textarea>
+    <div id="buffer" style="display:none"></div>
+</div>
+<div>
+    <a href="#" class="rrcOn" rel="linkSetList">Click here to check the links in linkset</a>
+</div>

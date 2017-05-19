@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.ArchivedLinkSet" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="Archive">
+    <cache region="org.rifasproject.domain.ArchivedLinkSet" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">archive_id_seq</param>
+      </generator>
+    </id>
+    <property column="uuid" length="40" name="uuid" not-null="true" type="string" unique="true"/>
+    <property column="name" length="80" name="name" type="string"/>
+    <property column="description" length="200" name="description" type="string"/>
+    <property column="type" name="type" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.LinkSetType</param>
+      </type>
+    </property>
+    <property column="storage" name="storage" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.InternetStorage</param>
+      </type>
+    </property>
+    <property column="source" name="source" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.LinkSetSource</param>
+      </type>
+    </property>
+    <property column="created" name="created" not-null="true"/>
+    <property column="archived" name="archived" not-null="true"/>
+    <property column="links" name="links" not-null="true" type="text"/>
+    <set cascade="all-delete-orphan" inverse="true" lazy="true" name="comments" order-by="created ASC" where="owner=1">
+      <cache usage="nonstrict-read-write"/>
+      <key>
+        <column index="itemIdowner" name="itemId"/>
+      </key>
+      <one-to-many class="org.rifasproject.domain.Comment"/>
+    </set>
+  </class>
+</hibernate-mapping>

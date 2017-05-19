@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class dynamic-insert="false" dynamic-update="false" mutable="true" name="org.rifasproject.domain.LinkSet" optimistic-lock="version" polymorphism="implicit" select-before-update="false">
+    <cache region="org.rifasproject.domain.LinkSet" usage="read-write"/>
+    <id column="id" name="id">
+      <generator class="sequence">
+        <param name="sequence">linkset_id_seq</param>
+      </generator>
+    </id>
+    <property column="uuid" length="40" name="uuid" not-null="true" type="string" unique="true"/>
+    <property column="name" length="80" name="name" type="string"/>
+    <property column="description" length="200" name="description" type="string"/>
+    <set cascade="all-delete-orphan" inverse="true" lazy="true" name="links" order-by="id asc">
+      <cache usage="read-write"/>
+      <key column="linkSetId"/>
+      <one-to-many class="org.rifasproject.domain.Link"/>
+    </set>
+    <set cascade="save-update" lazy="true" name="tags" table="LinkSetTag">
+      <cache usage="read-write"/>
+      <key column="linkSetId"/>
+      <many-to-many class="org.rifasproject.domain.Tag" column="tagId"/>
+    </set>
+    <property column="type" name="type" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.LinkSetType</param>
+      </type>
+    </property>
+    <property column="storage" name="storage" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.InternetStorage</param>
+      </type>
+    </property>
+    <property column="source" name="source" not-null="true">
+      <type name="org.hibernate.type.EnumType">
+        <param name="enumClass">org.rifasproject.domain.LinkSetSource</param>
+      </type>
+    </property>
+    <property column="created" name="created" not-null="true"/>
+    <property column="lastChecked" name="lastChecked"/>
+    <set cascade="none" inverse="false" lazy="true" name="pages" table="LinkSetWebPage">
+      <cache usage="nonstrict-read-write"/>
+      <key column="linkSetId"/>
+      <many-to-many class="org.rifasproject.domain.WebPage" column="webPageId"/>
+    </set>
+    <set cascade="save-update" inverse="true" lazy="true" name="comments" order-by="created ASC" where="owner=0">
+      <cache usage="nonstrict-read-write"/>
+      <key>
+        <column index="itemIdowner" name="itemId"/>
+      </key>
+      <one-to-many class="org.rifasproject.domain.Comment"/>
+    </set>
+    <!--
+    <join table="LinkSetWebPage" inverse="true">
+        <key column="linkSetId" unique="true" />
+        <many-to-one class="org.rifasproject.domain.WebPage" column="webPageId" name="page" not-null="true" />
+    </join>
+    -->
+  </class>
+</hibernate-mapping>

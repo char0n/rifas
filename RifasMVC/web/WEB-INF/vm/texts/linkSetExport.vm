@@ -1,0 +1,27 @@
+#set($layout = "layouts/xmlLayout.vm")
+<div id="linkSetExportModalWindow">
+    <div style="text-align: right">
+        <a href="#" class="lbAction" rel="deactivate"><img style="width:16px;height:16px" src="$request.contextPath/images/close_icon.gif" alt="" width="16" height="16" border="0" /></a>
+    </div>
+    <div class="centered">
+        <h2 class="centered">Openpaste LinkSet Export</h2>
+        <br />
+        <p style="padding: 10px;">
+            Clicking on export button, LinkSet will be exported
+            to <a href="http://openpaste.org/" target="_blank">openpaste.org</a> pastebin. You can further share exported
+            links, or store them on openpaste even if they are removed from
+            RIFAS.
+        </p>
+    </div>
+    <form name="exportButtonForm" action="/" method="post" class="centered" style="margin: 0;padding:0">
+        <input type="button" name="exportButton" onclick="exportOpenpaste('$linkSetUUID');" value="Export to Openpaste" />
+    </form>
+    <div id="content" class="centered">
+        <img id="progress" style="width: 36px;height: 36px;display:none" src="$request.contextPath/images/scan_progress.gif" width="36" height="36" alt="Exportig" />
+        <form id="exportForm" name="exportForm" action="/" method="post" style="margin:0;display:none">
+            <br /><br />
+            <input type="text" name="exportURL" value="" size="50" />
+            <input type="button" value="Go" onclick="openExportLink();" />
+        </form>
+    </div>
+</div>
